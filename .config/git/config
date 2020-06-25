@@ -1,0 +1,5 @@
+[user]
+	email = github@hillburn.net
+	name = Alexander Hildebrandt
+[pull]
+	rebase = true

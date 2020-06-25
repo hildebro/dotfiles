@@ -1,0 +1,6 @@
+#!/bin/sh
+
+printf "%s %s\n" "$(echo 📅)" "$(date '+%A %d.%m. %H:%M')"
+#printf "%s %s\n" $(echo 📅) $(date '+%b %d (%a) %I:%M%p')
+#date '+%b %d (%a) %I:%M%p'
+

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+usage=$(free -h | awk '/^Mem:/ {print $3 "/" $2 " "}')
+
+printf "%s%s" "⚙️" "$(echo "$usage")"
+

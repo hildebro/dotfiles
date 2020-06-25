@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Requires maim. It lets you choose the kind of screenshot to take,
+# including copying the image or even highlighting an area to copy.
+
+case "$(printf "selected area\\ncurrent window\\nfull screen\\nselected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -i -p "Choose area:")" in
+	"selected area") maim -s ~/pictures/screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png ;;
+	"current window") maim -i "$(xdotool getactivewindow)" ~/pictures/screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png ;;
+	"full screen") maim ~/pictures/screenshots/$(date '+%Y-%m-%d-%H:%M:%S').png ;;
+	"selected area (copy)") maim -s | xclip -selection clipboard -t image/png ;;
+	"current window (copy)") maim -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png ;;
+	"full screen (copy)") maim | xclip -selection clipboard -t image/png ;;
+esac
