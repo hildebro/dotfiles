@@ -35,8 +35,6 @@
 .steam
 .steampath
 .steampid
-# this file exists as a symlink to .profile
-.zprofile
 development
 Downloads
 pictures
