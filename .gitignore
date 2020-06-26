@@ -1,0 +1,43 @@
+# git ls-files --others --exclude-from=.git/info/exclude
+
+# configs that are auto-generated, confidential or otherwise unwanted
+.config/chromium
+.config/composer
+.config/configstore
+.config/deluge
+.config/gtk-*
+.config/JetBrains
+.config/menus
+.config/mono.addins
+.config/mpd/*
+!.config/mpd/mpd.conf
+.config/Mumble
+.config/nvim/*
+!.config/nvim/init.vim
+.config/Pinta
+.config/pulse
+.config/Slack
+.config/sxiv
+.config/xbuild
+.config/zsh/*
+!.config/zsh/.zshrc
+
+.Xauthority
+.cache
+.dotfiles
+.fasd
+.java
+.local/share
+.local/src
+.pki
+.pulse-cookie
+.ssh
+.steam
+.steampath
+.steampid
+# this file exists as a symlink to .profile
+.zprofile
+development
+Downloads
+pictures
+steam.desktop
