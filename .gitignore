@@ -26,6 +26,8 @@
 .cache
 .dotfiles
 .fasd
+.gnome
+.gnupg
 .java
 .local/share
 .local/src
