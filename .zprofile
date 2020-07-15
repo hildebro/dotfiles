@@ -1,5 +1,7 @@
 # Profile file. Runs on login. Environmental variables are set here.
 
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export PATH="$PATH:./bin/"
@@ -30,6 +32,7 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export ZGEN_DIR="$XDG_CONFIG_HOME/zsh/.zgen"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"

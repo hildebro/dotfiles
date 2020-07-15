@@ -4,6 +4,7 @@
 .config/chromium
 .config/composer
 .config/configstore
+.config/dconf
 .config/deluge
 .config/gtk-*
 .config/JetBrains
@@ -25,6 +26,7 @@
 .Xauthority
 .cache
 .dotfiles
+.elm
 .fasd
 .gnome
 .gnupg
