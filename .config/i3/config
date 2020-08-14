@@ -20,8 +20,6 @@ set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
 
 # #---Starting External Scripts---# #
-# mpd startup
-exec --no-startup-id mpd
 # Setting the background
 exec --no-startup-id setbg
 # Starts dunst for notifications
@@ -169,7 +167,7 @@ bindsym $mod+F3		exec --no-startup-id displayselect
 bindsym $mod+F4		exec $term -e nmtui
 bindsym $mod+Shift+F4	exec --no-startup-id $netrefresh
 bindsym $mod+F7		restart
-bindsym $mod+F8		exec --no-startup-id i3lock -e -f -c 1d2021
+bindsym --release $mod+F8		exec --no-startup-id slock
 bindsym $mod+F9		exec --no-startup-id prompt "Exit i3?" "i3-msg exit"
 bindsym $mod+F10	exec --no-startup-id prompt "Hibernate computer?" "$hibernate"
 bindsym $mod+F11	exec --no-startup-id prompt "Reboot computer?" "$reboot"

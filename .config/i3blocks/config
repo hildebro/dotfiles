@@ -35,8 +35,8 @@ signal=10
 interval=60
 command=disk / Root
 
-[iplocate]
-interval=60
+#[iplocate]
+#interval=60
 
 [internet]
 interval=10

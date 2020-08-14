@@ -1,4 +1,5 @@
 let mapleader =","
+let maplocalleader ="\<space>"
 
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -11,7 +12,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 
-Plug 'elmcast/elm-vim'
+Plug 'zaptic/elm-vim'
 
 Plug 'junegunn/goyo.vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
