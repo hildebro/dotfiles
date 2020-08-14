@@ -134,19 +134,9 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-#todo make dependent on laptop/desktop. maybe assign when loading a screenlayout
-workspace $ws1 output DP2-2
-workspace $ws2 output DP2-2
-workspace $ws3 output DP2-2
-workspace $ws4 output DP2-2
-workspace $ws5 output DP2-2
-workspace $ws6 output DP2-2
+##### MACHINE-SPECIFIC VALUES. LEAVE EMPTY ON MASTER
 
-workspace $ws7 output DP2-1
-workspace $ws8 output DP2-1
-workspace $ws9 output DP2-1
-
-workspace $ws10 output eDP1
+##### END MACHINE-SPECIFIC
 
 # switch to workspace
 bindsym $mod+1		workspace $ws1
