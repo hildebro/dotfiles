@@ -7,8 +7,10 @@
 .config/configstore
 .config/dconf
 .config/deluge
+.config/discord
 .config/gtk-*
 .config/JetBrains
+.config/inkscape
 .config/menus
 .config/mono.addins
 .config/mpd/*
