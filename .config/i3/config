@@ -228,3 +228,9 @@ for_window [title="^Steam Keyboard$"] floating enable
 
 # Fix for Origin startup issues.
 for_window [instance="origin.exe"] floating enable
+
+# #---Workspace assignments---# #
+assign [class="mumble"] 4
+assign [class="chat.google.com"] 5
+assign [class="telegram-desktop"] 6
+assign [class="jetbrains"] 7
