@@ -22,6 +22,8 @@
 .config/pulse
 .config/Slack
 .config/sxiv
+.config/syncthing
+.config/unity3d
 .config/QtProject.conf
 .config/xbuild
 .config/zsh/*
