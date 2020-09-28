@@ -34,6 +34,10 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"

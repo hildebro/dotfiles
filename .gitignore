@@ -1,6 +1,7 @@
 # git ls-files --others --exclude-from=.git/info/exclude
 
 # configs that are auto-generated, confidential or otherwise unwanted
+.config/Android*
 .config/cef_user_data/*
 .config/chromium
 .config/composer
@@ -29,11 +30,16 @@
 .config/zsh/*
 !.config/zsh/.zshrc
 
+.android
+.AndroidStudio*
 .Xauthority
 .cache
+.dart*
+.emulator_console_auth_token
 .dotfiles
 .elm
 .fasd
+.flutter*
 .gnome
 .gnupg
 .java
@@ -41,12 +47,14 @@
 .local/src
 .npm
 .pki
+.pub-cache
 .pulse-cookie
 .ssh
 .steam
 .steampath
 .steampid
 .wine
+Android
 Battle.net
 Battle.net.desktop
 development
