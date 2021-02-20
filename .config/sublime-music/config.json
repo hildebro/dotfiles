@@ -1,0 +1,63 @@
+{
+  "_loaded_provider_id": "2a020e95-29cd-4ebe-921b-d91ef51819b4",
+  "allow_song_downloads": true,
+  "cache_location": "/home/hillburn/.local/share/sublime-music",
+  "concurrent_download_limit": 5,
+  "current_provider_id": "2a020e95-29cd-4ebe-921b-d91ef51819b4",
+  "download_on_stream": true,
+  "filename": "/home/hillburn/.config/sublime-music/config.json",
+  "offline_mode": false,
+  "player_config": {
+    "Chromecast": {
+      "LAN Server Port Number": 8282,
+      "Serve Local Files to Chromecasts on the LAN": true
+    },
+    "Local Playback": {
+      "Replay Gain": "no"
+    }
+  },
+  "port_number": 8282,
+  "prefetch_amount": 3,
+  "providers": {
+    "2a020e95-29cd-4ebe-921b-d91ef51819b4": {
+      "caching_adapter_config": {},
+      "caching_adapter_type": "FilesystemAdapter",
+      "ground_truth_adapter_config": {
+        "password": [
+          "plaintext",
+          "5Oz!dISBk&0HJng40"
+        ],
+        "salt_auth": true,
+        "server_address": "music.hillburn.net",
+        "sync_enabled": true,
+        "username": "admin",
+        "verify_cert": true
+      },
+      "ground_truth_adapter_type": "SubsonicAdapter",
+      "id": "2a020e95-29cd-4ebe-921b-d91ef51819b4",
+      "name": "leskinen"
+    },
+    "e5b5dc5d-bf6c-4429-b17c-ff52b55ae32c": {
+      "caching_adapter_config": {},
+      "caching_adapter_type": "FilesystemAdapter",
+      "ground_truth_adapter_config": {
+        "password": [
+          "plaintext",
+          "6!tQxR8X!YnjN7hfp"
+        ],
+        "salt_auth": true,
+        "server_address": "music.rafa.ee",
+        "sync_enabled": true,
+        "username": "hillburn",
+        "verify_cert": true
+      },
+      "ground_truth_adapter_type": "SubsonicAdapter",
+      "id": "e5b5dc5d-bf6c-4429-b17c-ff52b55ae32c",
+      "name": "Rafa"
+    }
+  },
+  "replay_gain": 0,
+  "serve_over_lan": true,
+  "song_play_notification": false,
+  "version": 6
+}

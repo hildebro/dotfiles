@@ -9,21 +9,27 @@
 .config/dconf
 .config/deluge
 .config/discord
+.config/filezilla
+.config/godot
 .config/gtk-*
+.config/Jackbox\ Games
 .config/JetBrains
 .config/inkscape
 .config/menus
+.config/.mono
 .config/mono.addins
 .config/mpd/*
 !.config/mpd/mpd.conf
 .config/Mumble
 .config/nvim/*
 !.config/nvim/init.vim
+.config/obs-studio
 .config/Pinta
 .config/pulse
 .config/Slack
 .config/sxiv
 .config/syncthing
+.config/Ticket\ to\ Ride
 .config/unity3d
 .config/QtProject.conf
 .config/xbuild
@@ -34,6 +40,7 @@
 .AndroidStudio*
 .Xauthority
 .cache
+.cargo
 .dart*
 .emulator_console_auth_token
 .dotfiles
@@ -45,14 +52,18 @@
 .java
 .local/share
 .local/src
+.mono
+.node-gyp
 .npm
 .pki
 .pub-cache
 .pulse-cookie
+.rustup
 .ssh
 .steam
 .steampath
 .steampid
+.twinkle
 .wine
 Android
 Battle.net

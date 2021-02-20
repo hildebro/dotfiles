@@ -1,5 +1,8 @@
 [user]
-	email = github@hillburn.net
+	email = alex@hillburn.net
 	name = Alexander Hildebrandt
+	signingkey = B17843A5F7BE8D411FCFCBA3707390B906CEAA40
 [pull]
 	rebase = true
+[commit]
+	gpgsign = true

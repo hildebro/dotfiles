@@ -48,7 +48,7 @@ bar {
 bindsym $mod+Return 		exec $term
 bindsym $mod+Shift+Return	exec --no-startup-id samedir
 
-bindsym $mod+sace		focus mode_toggle
+bindsym $mod+space		focus mode_toggle
 bindsym $mod+Shift+space 	floating toggle
 
 bindsym $mod+Insert		exec --no-startup-id showclip
@@ -89,7 +89,10 @@ mode "resize" {
 
 bindsym $mod+t			split toggle
 
-bindsym $mod+i 			exec $term -e htop
+bindsym $mod+i 			exec $term -e pulsemixer
+
+bindsym $mod+o 			exec --no-startup-id pactl set-default-sink alsa_output.pci-0000_28_00.3.analog-stereo
+bindsym $mod+p 			exec --no-startup-id pactl set-default-sink alsa_output.usb-GeneralPlus_USB_Audio_Device-00.analog-stereo
 
 bindsym $mod+a			exec --no-startup-id ddspawn dropdowncalc -f mono:pixelsize=24
 
@@ -110,6 +113,8 @@ bindsym $mod+Shift+k		move up 30
 
 bindsym $mod+l			focus right
 bindsym $mod+Shift+l		move right 30
+
+bindsym $mod+x			exec --no-startup-id rofi-pass
 
 bindsym $mod+b			floating toggle; sticky toggle; exec --no-startup-id hover left
 

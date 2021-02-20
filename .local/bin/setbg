@@ -7,7 +7,7 @@
 #	If wal is installed, also generate a colorscheme.
 
 # Location of link to wallpaper link.
-bgloc="${XDG_CACHE_HOME:-$HOME/.cache/}/wall.png"
+bgloc="${XDG_CACHE_HOME:-$HOME/.cache/}/wall.jpg"
 
 [ -f "$1" ] && ln -sf "$(readlink -f "$1")" "$bgloc" && notify-send -i "$bgloc" "Changing wallpaper..."
 
@@ -16,4 +16,4 @@ bgloc="${XDG_CACHE_HOME:-$HOME/.cache/}/wall.png"
 # If pywal is installed, use it.
 wal -s -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
 
-xwallpaper --zoom "$bgloc"
+feh --bg-scale "$bgloc"
