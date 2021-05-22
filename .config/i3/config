@@ -88,6 +88,7 @@ mode "resize" {
 }
 
 bindsym $mod+t			split toggle
+bindsym $mod+u			exec --no-startup-id sudo msi-rgb 0 0 0 -x
 
 bindsym $mod+i 			exec $term -e pulsemixer
 
