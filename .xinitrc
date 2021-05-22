@@ -10,5 +10,8 @@
 
 [ -f ~/.xprofile ] && . ~/.xprofile
 
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
 # start window manager
-ssh-agent i3 || break
+exec i3
