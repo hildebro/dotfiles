@@ -17,7 +17,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # Default programs:
 export EDITOR="nvim"
 export TERMINAL="st"
-export BROWSER="chromium"
+export BROWSER="google-chrome-stable"
 export READER="zathura"
 export STATUSBAR="${LARBSWM}blocks"
 
@@ -33,6 +33,9 @@ export ZGEN_DIR="$XDG_CONFIG_HOME/zsh/.zgen"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export GNUPGHOME="$XDG_DATA_HOME"/gnupg
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
 
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 
@@ -53,6 +56,10 @@ export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 
 # pass dir
 export PASSWORD_STORE_DIR="/home/hillburn/.local/share/pass"
+
+# work env varibales
+export VAGRANT_EXPERIMENTAL="disks"
+
 
 [ ! -f ~/.config/shortcutrc ] && shortcuts >/dev/null 2>&1
 
