@@ -1,8 +1,13 @@
 [user]
 	email = alex@hillburn.net
 	name = Alexander Hildebrandt
-	signingkey = B17843A5F7BE8D411FCFCBA3707390B906CEAA40
+	signingkey = D9ABAE8B4FDA0A4A
 [pull]
 	rebase = true
 [commit]
 	gpgsign = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

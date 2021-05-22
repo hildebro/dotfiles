@@ -9,8 +9,10 @@
 .config/dconf
 .config/deluge
 .config/discord
+.config/dolphin-emu
 .config/filezilla
 .config/godot
+.config/google-chrome
 .config/gtk-*
 .config/Jackbox\ Games
 .config/JetBrains
@@ -21,16 +23,20 @@
 .config/mpd/*
 !.config/mpd/mpd.conf
 .config/Mumble
+.config/ngrok2
 .config/nvim/*
 !.config/nvim/init.vim
 .config/obs-studio
+.config/PCSX2
 .config/Pinta
 .config/pulse
+.config/retroarch
 .config/Slack
 .config/sxiv
 .config/syncthing
 .config/Ticket\ to\ Ride
 .config/unity3d
+.config/VirtualBox
 .config/QtProject.conf
 .config/xbuild
 .config/zsh/*
@@ -38,7 +44,7 @@
 
 .android
 .AndroidStudio*
-.Xauthority
+.berkshelf
 .cache
 .cargo
 .dart*
@@ -72,3 +78,6 @@ development
 Downloads
 pictures
 steam.desktop
+.thunderbird
+VirtualBox\ VMs
+.Xauthority
