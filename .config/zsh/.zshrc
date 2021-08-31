@@ -3,13 +3,12 @@ source "$ZGEN_DIR/zgen.zsh"
 source "/usr/share/fzf/key-bindings.zsh"
 source "/usr/share/fzf/completion.zsh"
 
+autoload -U colors && colors
 autoload -U compinit && compinit
 
 if ! zgen saved; then
-  zgen load robbyrussell/oh-my-zsh plugins/colored-man-pages
-  zgen load nojhan/liquidprompt
   zgen load chrissicool/zsh-256color
-  zgen load zsh-users/zsh-completions src
+  zgen load zsh-users/zsh-completions, use:src
   zgen load zsh-users/zsh-syntax-highlighting
 
   zgen save
@@ -137,6 +136,6 @@ lfcd () {
 }
 bindkey -s '^o' 'lfcd\n'
 
-# todo eval ssh-agent
-eval "$(fasd --init auto)"
-alias j='fasd_cd -d'
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+

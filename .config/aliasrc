@@ -45,3 +45,5 @@ alias \
 	magit="nvim -c MagitOnly" \
 	ref="shortcuts >/dev/null; source ~/.config/shortcutrc"
 
+# Better zoxide letter
+alias j ='z'
