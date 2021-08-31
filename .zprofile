@@ -1,14 +1,8 @@
 # Profile file. Runs on login. Environmental variables are set here.
 
-export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
-
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export PATH="$PATH:./bin/"
-
-# Get default LARBS WM from ~/.local/share/larbs/wm
-export LARBSWM="$(cat ~/.local/share/larbs/wm 2>/dev/null)" &&
-	[ "$LARBSWM" = "dwm" ] || export LARBSWM="i3"
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -19,7 +13,7 @@ export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="google-chrome-stable"
 export READER="zathura"
-export STATUSBAR="${LARBSWM}blocks"
+export STATUSBAR="i3blocks"
 
 # ~/ Clean-up:
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
@@ -38,8 +32,6 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
 
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
-
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
