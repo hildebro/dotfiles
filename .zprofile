@@ -11,7 +11,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # Default programs:
 export EDITOR="nvim"
 export TERMINAL="alacritty"
-export BROWSER="google-chrome-stable"
+export BROWSER="firefox"
 export READER="zathura"
 export STATUSBAR="i3blocks"
 
