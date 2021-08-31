@@ -46,4 +46,4 @@ alias \
 	ref="shortcuts >/dev/null; source ~/.config/shortcutrc"
 
 # Better zoxide letter
-alias j ='z'
+alias j='z'

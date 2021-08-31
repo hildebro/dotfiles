@@ -8,7 +8,7 @@ autoload -U compinit && compinit
 
 if ! zgen saved; then
   zgen load chrissicool/zsh-256color
-  zgen load zsh-users/zsh-completions, use:src
+  zgen load zsh-users/zsh-completions use:src
   zgen load zsh-users/zsh-syntax-highlighting
 
   zgen save
