@@ -1,1 +1,1 @@
-google-chrome-stable --app=https://chat.google.com/u/1
+firefox --new-window https://chat.google.com/u/1/
