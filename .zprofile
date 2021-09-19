@@ -51,6 +51,8 @@ export PASSWORD_STORE_DIR="/home/hillburn/.local/share/pass"
 
 # work env varibales
 export VAGRANT_EXPERIMENTAL="disks"
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 
 
 [ ! -f ~/.config/shortcutrc ] && shortcuts >/dev/null 2>&1
