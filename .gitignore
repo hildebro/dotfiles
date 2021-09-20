@@ -3,6 +3,7 @@
 # configs that are auto-generated, confidential or otherwise unwanted
 .config/Android*
 .config/aws
+.config/beets/state.pickle
 .config/cef_user_data/*
 .config/chromium
 .config/composer
