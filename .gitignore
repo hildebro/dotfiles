@@ -9,6 +9,7 @@
 .config/composer
 .config/configstore
 .config/dconf
+.config/deemix
 .config/deluge
 .config/discord
 .config/dolphin-emu
