@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Configures audio sinks to use for streaming
+
 pactl load-module module-null-sink
 pactl load-module module-combine-sink slaves=null,alsa_output.pci-0000_28_00.3.analog-stereo
 pacmd update-sink-proplist null device.description=\"Stream Only\"
