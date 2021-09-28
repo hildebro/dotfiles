@@ -1,0 +1,6 @@
+#!/bin/sh
+
+systemctl is-active cups --quiet || sudo systemctl start cups
+systemctl is-active avahi-daemon --quiet || sudo systemctl start avahi-daemon
+
+lp -d Canon_MG3600_series $1
