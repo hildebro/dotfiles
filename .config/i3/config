@@ -236,6 +236,8 @@ for_window [instance="origin.exe"] floating enable
 
 # #---Workspace assignments---# #
 assign [instance="mumble"] 4
-assign [instance="chat.google.com"] 5
 assign [instance="telegram-desktop"] 6
 assign [instance="jetbrains"] 7
+# Special assignment for window title which doesn't load instantly on execution
+for_window [class="firefox" title="Chat — Mozilla Firefox"] move window to workspace $ws5
+
