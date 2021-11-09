@@ -54,6 +54,7 @@
 .cargo
 .dart*
 .emulator_console_auth_token
+.docker
 .dotfiles
 .elm
 .fasd
