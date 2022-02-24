@@ -17,10 +17,13 @@
 .config/godot
 .config/google-chrome
 .config/gtk-*
+.config/gzdoom
 .config/Jackbox\ Games
 .config/JetBrains
+.config/jgit
 .config/inkscape
 .config/menus
+.config/Microsoft
 .config/.mono
 .config/mono.addins
 .config/mpd/*
@@ -32,6 +35,7 @@
 .config/obs-studio
 .config/PCSX2
 .config/Pinta
+.config/Postman
 .config/pulse
 .config/retroarch
 .config/rpcs3
@@ -40,10 +44,13 @@
 .config/sxiv
 .config/syncthing
 .config/Ticket\ to\ Ride
+.config/tuxclocker.conf
 .config/unity3d
 .config/VirtualBox
+.config/vlc
 .config/QtProject.conf
 .config/xbuild
+.config/yuzu
 .config/zsh/*
 !.config/zsh/.zshrc
 
@@ -87,6 +94,8 @@ Battle.net.desktop
 development
 Downloads
 go
+google-ads-php
+google_ads_php.ini
 pictures
 rpcs3
 steam.desktop

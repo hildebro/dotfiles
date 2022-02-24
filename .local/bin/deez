@@ -1,2 +1,2 @@
- deemix -p ./ $1
+ deemix --bitrate MP3 -p ./ $1
 
