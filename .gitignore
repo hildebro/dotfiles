@@ -8,6 +8,7 @@
 .config/chromium
 .config/composer
 .config/configstore
+.config/CrossCode
 .config/dconf
 .config/deemix
 .config/deluge
@@ -72,6 +73,7 @@
 .java
 .local/share
 .local/src
+.local/state
 .mono
 .mozilla
 .node-gyp
@@ -94,6 +96,7 @@ Battle.net
 Battle.net.desktop
 development
 Downloads
+FireaxisLive
 go
 google-ads-php
 google_ads_php.ini
