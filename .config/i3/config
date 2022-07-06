@@ -55,12 +55,10 @@ bindsym $mod+Insert		exec --no-startup-id showclip
 
 bindsym Print 			exec --no-startup-id maimpick
 
-bindsym $mod+equal		exec --no-startup-id lmc up 5
-bindsym $mod+Shift+equal	exec --no-startup-id lmc up 15
-bindsym $mod+minus 		exec --no-startup-id lmc down 5
-bindsym $mod+Shift+minus	exec --no-startup-id lmc down 15
-bindsym $mod+Shift+less 	exec --no-startup-id lmc prev
-bindsym $mod+Shift+greater	exec --no-startup-id lmc next
+bindsym $mod+equal		exec --no-startup-id pamixer -i 5 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+Shift+equal	exec --no-startup-id pamixer -i 15 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+minus 		exec --no-startup-id pamixer -d 5 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+Shift+minus	exec --no-startup-id pamixer -d 15 && pkill -RTMIN+10 "${STATUSBAR:?}" &
 
 # #---Letter Key Bindings---# #
 bindsym $mod+q			[con_id="__focused__" instance="^(?!dropdown_).*$"] kill
@@ -122,7 +120,7 @@ bindsym $mod+b			floating toggle; sticky toggle; exec --no-startup-id hover left
 bindsym $mod+n			floating toggle; sticky toggle; exec --no-startup-id hover right
 
 bindsym $mod+m 			exec --no-startup-id amixer set Capture toggle
-bindsym $mod+Shift+m		exec --no-startup-id lmc toggle
+bindsym $mod+Shift+m		exec --no-startup-id pamixer -t && pkill -RTMIN+10 "${STATUSBAR:?}" &
 
 bindsym $mod+Ctrl+m		exec $term -e pulsemixer
 

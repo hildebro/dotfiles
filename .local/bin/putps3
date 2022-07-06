@@ -1,0 +1,1 @@
+rsync -r --progress /home/hillburn/.config/rpcs3/dev_hdd0/home leskinen:/srv/files/Games/ps3/dev_hdd0

@@ -16,6 +16,7 @@ inode/directory=file.desktop
 x-scheme-handler/tg=userapp-Telegram Desktop-XE35V0.desktop
 x-scheme-handler/webcal=google-chrome.desktop
 x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/discord-712465656758665259=discord-712465656758665259.desktop
 
 [Added Associations]
 x-scheme-handler/tg=userapp-Telegram Desktop-XE35V0.desktop;
