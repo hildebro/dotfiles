@@ -1,2 +1,2 @@
-youtube-dl -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 $1
+yt-dlp -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 $1
 
