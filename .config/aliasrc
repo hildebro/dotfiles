@@ -5,7 +5,7 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	bat="cat /sys/class/power_supply/BAT?/capacity" \
+	cat="bat" \
 	cp="cp -iv" \
 	mv="mv -iv" \
 	rm="rm -v" \

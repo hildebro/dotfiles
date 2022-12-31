@@ -36,6 +36,7 @@
 .config/obs-studio
 .config/PCSX2
 .config/Pinta
+.config/plex.tv
 .config/Postman
 .config/pulse
 .config/Raspberry Pi
@@ -48,6 +49,7 @@
 .config/Ticket\ to\ Ride
 .config/tuxclocker.conf
 .config/unity3d
+.config/Vampire_Survivors*
 .config/VirtualBox
 .config/vlc
 .config/QtProject.conf
@@ -101,6 +103,7 @@ FireaxisLive
 go
 google-ads-php
 google_ads_php.ini
+music
 pictures
 rpcs3
 steam.desktop
