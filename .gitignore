@@ -25,6 +25,7 @@
 .config/inkscape
 .config/menus
 .config/Microsoft
+.config/mimeapps.list
 .config/.mono
 .config/mono.addins
 .config/mpd/*
@@ -73,6 +74,7 @@
 .gnome
 .gnupg
 .java
+.klei
 .local/share
 .local/src
 .local/state

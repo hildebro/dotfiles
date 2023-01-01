@@ -1,20 +1,7 @@
-# zgen prerequisites
-source "$ZGEN_DIR/zgen.zsh"
 source "/usr/share/fzf/key-bindings.zsh"
 source "/usr/share/fzf/completion.zsh"
 
 autoload -U colors && colors
-autoload -U compinit && compinit
-
-if ! zgen saved; then
-  zgen load chrissicool/zsh-256color
-  zgen load zsh-users/zsh-completions use:src
-  zgen load zsh-users/zsh-syntax-highlighting
-
-  zgen save
-fi
-
-# general configuration
 autoload -U compinit && compinit
 autoload -U promptinit && promptinit
 
@@ -77,8 +64,8 @@ zstyle ':completion:*:history-words' list false
 zstyle ':completion:*:history-words' menu yes
 
 # Syntax Highlighting
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=002,bold'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=002,bold'
+#ZSH_HIGHLIGHT_STYLES[globbing]='fg=002,bold'
+#ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=002,bold'
 
 # load aliases and shortcuts
 [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
