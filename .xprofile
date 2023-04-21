@@ -72,7 +72,7 @@ sudo -n loadkeys ~/.local/share/larbs/ttymaps.kmap 2>/dev/null
 screenlayout &          # apply xrandr config (run this before other scripts in case they might interact with resolution in any way)
 xcompmgr &              # start compositor
 remaps &		# run the remaps script, switching caps/esc and more; check it for more info
-setbg &			# set the background with the `setbg` script
+feh --no-fehbg --bg-scale '/home/hillburn/.cache/wall.jpg' & # set background
 xrdb -merge ~/.config/Xresources &	# use Xresources colors/settings on startup
 $STATUSBAR &		# start the statusbar
 dunst &			# dunst for notifications
