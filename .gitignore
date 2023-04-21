@@ -1,11 +1,14 @@
 # git ls-files --others --exclude-from=.git/info/exclude
 
 # configs that are auto-generated, confidential or otherwise unwanted
+.config/1Password/*
 .config/Android*
 .config/aws
+.config/balena-etcher/*
 .config/beets/state.pickle
 .config/cef_user_data/*
 .config/chromium
+.config/cmus
 .config/composer
 .config/configstore
 .config/CrossCode
@@ -14,6 +17,7 @@
 .config/deluge
 .config/discord
 .config/dolphin-emu
+.config/duckstation/*
 .config/filezilla
 .config/godot
 .config/google-chrome
@@ -45,6 +49,7 @@
 .config/rpcs3
 .config/Signal
 .config/Slack
+.config/StardewValley/*
 .config/sxiv
 .config/syncthing
 .config/Ticket\ to\ Ride
@@ -96,6 +101,7 @@
 .subversion
 .twinkle
 .wine
+.xsession-errors*
 Android
 Battle.net
 Battle.net.desktop
@@ -108,6 +114,7 @@ google_ads_php.ini
 music
 pictures
 rpcs3
+.screenshots
 steam.desktop
 .thunderbird
 VirtualBox\ VMs
