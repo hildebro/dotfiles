@@ -1,8 +1,13 @@
 #!/bin/sh
 
-[ "$(cat /sys/class/net/w*/operstate)" = 'down' ] && wifiicon="📡" ||
-	wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "📶", int($3 * 100 / 70) "%" }')
+# check whether any wifi interface exists
+# if so, render an icon depending on the state
+[ -z "$(/usr/bin/ls -A /sys/class/net | rg -e '^w')" ] \
+  || ([ "$(cat /sys/class/net/w*/operstate)" = 'down' ] \
+  && wifiicon="📡" \
+  || wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "📶", int($3 * 100 / 70) "%" }'))
 
+# asume ethernet will always be present, render icon depending on state.
 ethericon="🌐"
 if [[ -z "$(rg 'up' /sys/class/net/e*/operstate)" ]]; then
 	# if no ethernet interface is up, switch to DOWN icon

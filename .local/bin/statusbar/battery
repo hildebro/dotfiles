@@ -3,6 +3,9 @@
 # Prints all batteries, their percentage remaining and an emoji corresponding
 # to charge status (🔌 for pluged up, 🔋 for discharging on battery, etc.).
 
+# Stop, if there's no battery info.
+[ -z "$(/usr/bin/ls -A /sys/class/power_supply)" ] && exit;
+
 # Loop through all attached batteries.
 for battery in /sys/class/power_supply/BAT?
 do
