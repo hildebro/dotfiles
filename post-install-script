@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# todo add commands for installing paru
+
+paru -S adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty anki arandr avahi bat cups deluge-gtk docker docker-compose dosfstools dunst exa feh fzf gnome-keyring gnumeric maim man-db mumble nss-mdns neovim ntfs-3g pamixer pass pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip zip zoxide zsh
+
+git clone "https://github.com/hildebro/dotfiles" /tmp/dotfiles
+cp -rfT /tmp/dotfiles /home/hillburn
+mv /home/hillburn/.git /home/hillburn/.dotfiles
+
+# zsh as default shell
+
+# remove bash* from home
+
+# cleanup vim and zsh configs
+
+# init gpg
+
+# maybe reflector stuff
+# maybe system beep (if not needed for desktop, still keept for laptop just in case)
+# maybe some commands that dont need sudo pw (via /etc/sudoers.d)
+# remove nvidia from .config
+# remove zgen
+# fix .dotfiles/config having broken fetch (maybe checkout master first, then switch branch. or just omit --depth
+# freesync
+# run display config on startup
+
+# start docker socket
+# add user to docker group
+
+
+# avahi hostname resolution for printing
