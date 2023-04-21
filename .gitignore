@@ -23,6 +23,7 @@
 .config/google-chrome
 .config/gtk-*
 .config/gzdoom
+.config/hetznerbot.toml
 .config/Jackbox\ Games
 .config/JetBrains
 .config/jgit
