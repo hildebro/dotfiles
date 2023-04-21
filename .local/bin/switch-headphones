@@ -1,0 +1,4 @@
+#!/bin/sh
+id=$(wpctl status | rg 'Wired Headphones' | sed 's/\[vol.*//g' | sed 's/[^0-9]//g')
+
+wpctl set-default $id

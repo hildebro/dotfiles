@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# Script that lets you autotype the user/password values from a 1password vault
+
+# Some best practice settings for bash scripts
+# set -e: automatically exits on any failing command
+# set -u: exits if there are any unset variables
+# set -o pipefail: automatically exits, if any command in a pipe fails (normally only the last is counted)
+set -euo pipefail
+
+# Get a list of items from 1Password.
+item_list=$(op item list)
+
+# Extract the titles from the list, pass them to rofi and save what the user selects.
+selected_title=$(echo "$item_list" | awk -v FS=' {2,}' 'NR>1{print $2}' | sort | rofi -i -dmenu -p "Select an entry")
+
+# Search the item_list for the row that matches the selected title. From that row, save the id.
+id=$(echo "$item_list" | awk -v title="$selected_title" -v FS=' {2,}' '$2==title{print $1}')
+# Get the info of the selected item.
+item_info=$(op item get "$id")
+
+# Extract all keys between "Fields" and "URLs".
+labels=$(echo "$item_info" | sed -n '/Fields:/,/URLs:/p' | grep -vE '^(Fields:|URLs:|\s*$)' | awk -F': ' '$2!=""{print $1}')
+# Display the field keys via rofi and save the user selection.
+selected_field=$(echo "$labels" | rofi -i -dmenu -p "Select a field")
+
+# Get the field value based on the given field key.
+field_value=$(echo "$item_info" | awk -v field="$selected_field" -F ':\\s+' '$1==field{print $2; exit}')
+
+# Put the field value into the clipboard
+echo "$field_value" | xclip -selection clipboard
