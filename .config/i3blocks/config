@@ -28,8 +28,11 @@ markup=pango
 #signal=12
 
 [volume]
-interval=once
+interval=60
 signal=10
+
+[temps]
+interval=5
 
 [disk]
 interval=60
