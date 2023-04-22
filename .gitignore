@@ -6,6 +6,7 @@
 .config/aws
 .config/balena-etcher/*
 .config/beets/state.pickle
+.config/BraveSoftware
 .config/cef_user_data/*
 .config/chromium
 .config/cmus
@@ -20,7 +21,7 @@
 .config/duckstation/*
 .config/filezilla
 .config/godot
-.config/google-chrome
+.config/google-chrome*
 .config/gtk-*
 .config/gzdoom
 .config/hetznerbot.toml
@@ -30,6 +31,7 @@
 .config/inkscape
 .config/menus
 .config/Microsoft
+.config/microsoft-edge-dev
 .config/mimeapps.list
 .config/.mono
 .config/mono.addins
@@ -40,6 +42,7 @@
 .config/nvim/*
 !.config/nvim/init.vim
 .config/obs-studio
+.config/op
 .config/PCSX2
 .config/Pinta
 .config/plex.tv
@@ -58,6 +61,7 @@
 .config/unity3d
 .config/Vampire_Survivors*
 .config/VirtualBox
+.config/vivaldi*
 .config/vlc
 .config/QtProject.conf
 .config/xbuild
