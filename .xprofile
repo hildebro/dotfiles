@@ -54,6 +54,21 @@ export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 # pass dir
 export PASSWORD_STORE_DIR="/home/hillburn/.local/share/pass"
 
+# python startup script
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/pythonrc.py"
+
+# ansible
+export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
+export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
+
+# docker
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export MACHINE_STORAGE_PATH="$XDG_DATA_HOME"/docker-machine
+
+# java
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+
 # work env varibales
 export VAGRANT_EXPERIMENTAL="disks"
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
