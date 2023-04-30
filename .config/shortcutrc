@@ -1,7 +1,0 @@
-# vim: filetype=sh
-alias h="cd ~/ && ls -a" \
-D="cd ~/Downloads && ls -a" \
-cf="cd ~/.config && ls -a" \
-sc="cd ~/.local/bin && ls -a" \
-mn="cd /mnt && ls -a" \
-

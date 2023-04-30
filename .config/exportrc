@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Adds `~/.local/bin` and subfolders to $PATH
+export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+# Adds `./bin` to $PATH where some projects put their executables
+export PATH="$PATH:./bin/"
+# Adds cargo binaries to $PATH
+export PATH="$PATH:$HOME/.local/share/cargo/bin"
+
+# XDG_BASE_DIRECTORY
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+
+# Set default programs
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+export BROWSER="firefox"
+export READER="zathura"
+export STATUSBAR="i3blocks"
+
+# Cleanup the home directory
+#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+export LESSHISTFILE="-"
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+export INPUTRC="$XDG_CONFIG_HOME/inputrc"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/pythonrc.py"
+export ANSIBLE_HOME="$XDG_CONFIG_HOME/ansible"
+export ANSIBLE_CONFIG="$XDG_CONFIG_HOME/ansible.cfg"
+export ANSIBLE_GALAXY_CACHE_DIR="$XDG_CACHE_HOME/ansible/galaxy_cache"
+export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+
+# Other program settings:
+export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+export LESS=-R
+export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+export VAGRANT_EXPERIMENTAL="disks"
+
