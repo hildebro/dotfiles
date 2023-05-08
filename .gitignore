@@ -17,6 +17,7 @@
 .config/deemix
 .config/deluge
 .config/discord
+.config/docker
 .config/dolphin-emu
 .config/duckstation/*
 .config/filezilla
