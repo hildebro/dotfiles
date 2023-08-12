@@ -7,6 +7,7 @@
 .config/balena-etcher/*
 .config/beets/state.pickle
 .config/BraveSoftware
+.config/btop/btop.log
 .config/cef_user_data/*
 .config/chromium
 .config/cmus
@@ -30,6 +31,7 @@
 .config/JetBrains
 .config/jgit
 .config/inkscape
+.config/lxqt
 .config/menus
 .config/Microsoft
 .config/microsoft-edge-dev
