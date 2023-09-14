@@ -1,0 +1,5 @@
+#!/bin/sh
+
+telegram-desktop &
+thunderbird &
+1password &

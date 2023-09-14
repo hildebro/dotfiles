@@ -3,14 +3,14 @@ source '/home/hillburn/.zshenv'
 
 # apply xrandr config (run this before other scripts in case they might interact with resolution in any way)
 screenlayout &
-# start compositor for some graphical enchancements
-xcompmgr &
-# keyboard settings (like making capslock act like esc)
-remaps &
+# use Xresources for colors, scaling, etc.
+xrdb -merge ~/.config/Xresources &
 # set background
 feh --no-fehbg --bg-scale '/home/hillburn/.cache/wall.jpg' &
-# use Xresources colors/settings on startup
-xrdb -merge ~/.config/Xresources &
+# start compositor for some graphical enchancements
+xcompmgr &
+# keyboard customization
+remaps &
 # start the statusbar
 $STATUSBAR &
 # start notifications
@@ -19,8 +19,8 @@ dunst &
 xset r rate 300 50 &
 # Remove mouse when idle
 unclutter &
-# Authentication popup
-lxpolkit &
+# Autostart programs
+autostart &
 
 # start the gpg ssh agent
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
