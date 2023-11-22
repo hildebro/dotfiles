@@ -88,6 +88,7 @@
 .gnupg
 .java
 .klei
+.local/bin/work
 .local/share
 .local/src
 .local/state
