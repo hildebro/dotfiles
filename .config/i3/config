@@ -20,7 +20,7 @@ set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
 
 bar {
-        font pango:SourceCodePro, FontAwesome, Inconsolata Medium 10
+        font pango:Linux Libertine 11
 	status_command i3blocks
 	position top
 	mode dock
@@ -97,8 +97,6 @@ bindsym $mod+Shift+k		move up 30
 
 bindsym $mod+l			focus right
 bindsym $mod+Shift+l		move right 30
-
-bindsym $mod+x			exec --no-startup-id rofi-pass
 
 bindsym $mod+b			floating toggle; sticky toggle; exec --no-startup-id hover left
 
