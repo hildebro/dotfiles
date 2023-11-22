@@ -30,3 +30,5 @@ mv /home/hillburn/.git /home/hillburn/.dotfiles
 
 
 # avahi hostname resolution for printing
+
+# tuigreet with startx
