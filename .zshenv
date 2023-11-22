@@ -39,6 +39,7 @@ export ANSIBLE_GALAXY_CACHE_DIR="$XDG_CACHE_HOME/ansible/galaxy_cache"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME"/platformio
 
 # Other program settings:
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
