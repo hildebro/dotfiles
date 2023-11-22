@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cpu_temp=$(sensors | rg CPUTIN: | awk -F'[:°.]' '/CPUTIN/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
+
+echo "🌡️ CPU $cpu_temp"

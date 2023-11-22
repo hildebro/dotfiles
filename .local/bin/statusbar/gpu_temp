@@ -1,0 +1,5 @@
+#!/bin/sh
+
+gpu_temp=$(sensors | rg edge: | awk -F'[:°.]' '/edge/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
+
+echo "🌡️ GPU $gpu_temp"

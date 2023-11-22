@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Status bar module for disk space
-# $1 should be drive mountpoint
-# $2 is optional icon, otherwise mountpoint will displayed
-
-printf "%s %s\n" "🌡️" "CPU: $(sensors | rg CPUTIN | awk '{print $2}') GPU: $(sensors | rg junction: | awk '{print $2}')"
