@@ -31,11 +31,11 @@ markup=pango
 interval=60
 signal=10
 
-[cpu_temp]
-interval=5
+[cpu_stats]
+interval=10
 
-[gpu_temp]
-interval=5
+[gpu_stats]
+interval=10
 
 [disk]
 interval=60
@@ -43,6 +43,9 @@ command=disk / Root
 
 #[iplocate]
 #interval=60
+
+[dlspeed]
+interval=300
 
 [internet]
 interval=10
