@@ -17,7 +17,7 @@ alias \
 
 # Colorize commands when possible.
 alias \
-	ls="exa --group-directories-first" \
+	ls="eza --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi"
