@@ -10,7 +10,7 @@ xrdb -merge ~/.config/Xresources &
 # set background
 feh --no-fehbg --bg-scale '/home/hillburn/.cache/wall.jpg' &
 # start compositor for some graphical enchancements
-xcompmgr &
+picom &
 # keyboard customization
 remaps &
 # start the statusbar
