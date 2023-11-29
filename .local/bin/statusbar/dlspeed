@@ -15,8 +15,8 @@ def get_formatted_speed(s,bytes=False):
         s = s / 1024
         unit = "K"
     if bytes:
-        return f"{(s/8):.2f} {unit}iB/s"
-    return f"{s:.2f} {unit}ib/s"
+        return f"{int(s/8)} {unit}iB/s"
+    return f"{int(s)} {unit}ib/s"
 
 
 
