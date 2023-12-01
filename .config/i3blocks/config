@@ -44,9 +44,6 @@ command=disk / Root
 #[iplocate]
 #interval=60
 
-[dlspeed]
-interval=300
-
 [internet]
 interval=10
 
