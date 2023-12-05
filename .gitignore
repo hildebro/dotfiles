@@ -42,8 +42,6 @@
 !.config/mpd/mpd.conf
 .config/Mumble
 .config/ngrok2
-.config/nvim/*
-!.config/nvim/init.vim
 .config/obs-studio
 .config/op
 .config/PCSX2
