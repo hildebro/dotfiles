@@ -54,3 +54,7 @@ export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
 export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 export VAGRANT_EXPERIMENTAL="disks"
 
+# Freesync
+export vblank_mode=0
+export mesa_glthread=true
+
