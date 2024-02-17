@@ -57,11 +57,20 @@ set mouse=a
 " Show the location of the cursor with line and column numbers
 set ruler
 
-" Mark the cursor's row and column
+" Cursor highlighting
 set cursorline
 hi CursorLine ctermbg=238
 set cursorcolumn
 hi CursorColumn ctermbg=238
+
+" Disable cursor highlighting on entering Visual modes
+autocmd ModeChanged *:[vV\x16] set nocursorline nocursorcolumn
+
+" Enable cursor highlighting on leaving Visual modes
+autocmd ModeChanged [vV\x16]:* set cursorline cursorcolumn
+
+" Jump to last position when reopening a file
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g'\"" | exe "normal! zz" | endif
 
 " ========= Custom commands =========
 
