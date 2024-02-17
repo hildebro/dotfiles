@@ -5,77 +5,77 @@ autoload -U colors && colors
 autoload -U compinit && compinit
 autoload -U promptinit && promptinit
 
-# history
+# History settings
 HISTFILE=~/.config/zsh/.zsh_history
 HISTSIZE=10000
 SAVEHIST=$HISTSIZE
-setopt inc_append_history   # write to history immediately
-setopt hist_ignore_dups     # ignore second instance of same event
-setopt share_history        # share history between session
-setopt extended_history     # special history format with timestamp
-setopt no_hist_beep         # fucking beep
-setopt hist_ignore_space    # ignore entries with leading space
 
-# misc options
-setopt extended_glob        # extended glob syntax
-setopt nomatch              # print error if pattern matches nothing
-setopt notify               # report status of background jobs immediately
+# write to history immediately
+setopt inc_append_history   
+# ignore second instance of same event
+setopt hist_ignore_dups     
+# share history between session
+setopt share_history        
+# special history format with timestamp
+setopt extended_history     
+# fucking beep
+setopt no_hist_beep         
+# ignore entries with leading space
+setopt hist_ignore_space    
+# extended glob syntax
+setopt extended_glob        
+# print error if pattern matches nothing
+setopt nomatch              
+# report status of background jobs immediately
+setopt notify               
+# complete from both ends of a word
+setopt complete_in_word     
+# move cursor to the end of a completed word
+setopt always_to_end        
+# perform path search even on command names with slashes
+setopt path_dirs            
+# disable start/stop characters in shell editor
+unsetopt flow_control       
 
-# completion options
-setopt complete_in_word     # complete from both ends of a word
-setopt always_to_end        # move cursor to the end of a completed word
-setopt path_dirs            # perform path search even on command names with slashes
-setopt auto_menu            # show completion menu on a succesive tab press
-setopt auto_list            # automatically list choices on ambiguous completion
-setopt auto_param_slash     # if completed parameter is a directory, add a trailing slash
-unsetopt menu_complete      # do not autoselect the first completion entry
-unsetopt flow_control       # disable start/stop characters in shell editor
-
-## Group matches and describe.
-# zstyle ':completion:*:*:*:*:*' menu select
+# group matches and describe.
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*:options' description 'yes'
 zstyle ':completion:*:options' auto-description '%d'
 zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
 zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:messages' format ' %F{yellow} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 
-## fuzzy match mistyped completions.
+# fuzzy match mistyped completions.
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-## directories
+# directories
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 zstyle ':completion:*' squeeze-slashes true
-#
-## history
+
+# history
 zstyle ':completion:*:history-words' stop yes
 zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
 zstyle ':completion:*:history-words' menu yes
 
-# Syntax Highlighting
-#ZSH_HIGHLIGHT_STYLES[globbing]='fg=002,bold'
-#ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=002,bold'
-
 # load aliases and shortcuts
 [ -f "$HOME/.config/shortcutrc" ] && source "$HOME/.config/shortcutrc"
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 
-
 # include hidden files in autocomplete
 _comp_options+=(globdots)
 
-# vim mode switching breaks, if this line is omitted 🤷
+# Prevent 'help' behavior of ^?, so it works as 'escape' mapping for vim mode
 bindkey -v '^?' backward-delete-char
 
 # faster switch to vim's normal mode
@@ -96,8 +96,9 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 
+# initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
 zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    zle -K viins 
     echo -ne "\e[5 q"
 }
 zle -N zle-line-init
