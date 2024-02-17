@@ -18,8 +18,19 @@ set smartcase
 " Enable persistent undo (save undo history across sessions)
 set undofile
 
-" Enable file backups 
+" Enable file backups
 set backup
+
+" Ensure directories exist beforehand (optional, but good practice)
+if empty(glob("~/.cache/nvim"))
+    call mkdir("~/.cache/nvim", "p")
+endif
+
+" Set backupdir
+set backupdir=~/.cache/nvim/backup/
+
+" Set directory (for swap files)
+set directory=~/.cache/nvim/swap// 
 
 " Show visual indication of search matches as you type
 set incsearch
