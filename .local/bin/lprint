@@ -1,6 +1,18 @@
 #!/bin/sh
 
+if [ "$#" -lt 2 ]; then
+	echo "Usage: $0 <filename> <num_copies>"
+	exit 1
+fi
+
 systemctl is-active cups --quiet || sudo systemctl start cups
 systemctl is-active avahi-daemon --quiet || sudo systemctl start avahi-daemon
 
-lp -d Canon_MG3600_series $1
+lp_options="-d Canon_MG3600_series"
+
+lp_options+=" -o ColorModel=Color"          # Add this line for color printing
+lp_options+=" -o sides=two-sided-long-edge" # Add this line for double-sided printing
+
+num_copies=$2
+
+lp $lp_options -n $num_copies $1
