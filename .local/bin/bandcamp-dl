@@ -2,11 +2,52 @@
 
 # Check if an album link was provided
 if [ $# -eq 0 ]; then
-    echo "Please provide a Bandcamp album link"
-    exit 1
+   echo "Please provide a Bandcamp album link"
+   exit 1
 fi
 
 album_url=$1
+
+# Function to create a temporary folder in /tmp
+create_temp_folder() {
+  temp_dir=$(mktemp -d /tmp/bandcamp-download.XXXXXX)
+  echo $temp_dir # Return the temporary directory path
+}
+
+# Function to extract metadata using ExifTool
+extract_metadata() {
+  artist=$(exiftool -s3 -Artist "$1")
+  album=$(exiftool -s3 -Album "$1")
+}
+
+# Function to check and create the target directory
+check_and_create_target_dir() {
+  target_dir="/srv/files/Music/$artist/$album"
+
+  if [ -d "$target_dir" ]; then
+    echo "Album already exists: $target_dir"
+    exit 1
+  else
+    mkdir -p "$target_dir"
+  fi
+}
+
+# *** Main Script Logic ***
+
+# Create a temporary folder
+temp_dir=$(create_temp_folder)
+
+# Change working directory to the temporary folder
+cd "$temp_dir" || exit 1  # Ensure cd was successful, exit if not
+
+# Function to clean up the temporary directory
+cleanup() {
+  cd - 2>/dev/null || true  # Move out of temp dir (ignore errors if already deleted)
+  rm -rf "$temp_dir"
+}
+
+# Register the cleanup function to run on script exit (normal or via signal)
+trap cleanup EXIT
 
 # Download the album using yt-dlp
 yt-dlp -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 --add-metadata "$album_url"
@@ -16,7 +57,27 @@ cover_url=$(curl -s "$album_url" | pup '#tralbumArt a.popupImage attr{href}')
 
 # Download the album cover using wget
 if [ -n "$cover_url" ]; then
-    wget -O cover.jpg "$cover_url"
+   wget -O cover.jpg "$cover_url"
 fi
 
-echo "Download complete!"
+# Extract metadata from the first downloaded MP3 file
+first_mp3=$(find . -type f -iname "*.mp3" | head -1)
+if [ -n "$first_mp3" ]; then
+  extract_metadata "$first_mp3"
+else
+  echo "Error: No MP3 files were downloaded."
+  exit 1
+fi
+
+# Check for an existing album folder and create it if necessary
+check_and_create_target_dir 
+
+# Copy files to the target music folder
+cp *.mp3 cover.jpg "$target_dir"
+
+# Clean up the temporary folder
+cd - # Move out of the temporary folder
+rm -rf "$temp_dir"
+
+echo "Download complete and files copied to $target_dir"
+
