@@ -1,6 +1,8 @@
 #!/bin/sh
 source '/home/hillburn/.zshenv'
 
+# disable system beep
+xset b off
 # don't turn off the monitors automatically
 xset s off -dpms
 # apply xrandr config (run this before other scripts in case they might interact with resolution in any way)
