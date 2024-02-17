@@ -1,2 +1,22 @@
-yt-dlp -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 --add-metadata $1
+#!/bin/bash
 
+# Check if an album link was provided
+if [ $# -eq 0 ]; then
+    echo "Please provide a Bandcamp album link"
+    exit 1
+fi
+
+album_url=$1
+
+# Download the album using yt-dlp
+yt-dlp -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 --add-metadata "$album_url"
+
+# Extract the album art URL using a simple HTML parser
+cover_url=$(curl -s "$album_url" | pup '#tralbumArt a.popupImage attr{href}')
+
+# Download the album cover using wget
+if [ -n "$cover_url" ]; then
+    wget -O cover.jpg "$cover_url"
+fi
+
+echo "Download complete!"
