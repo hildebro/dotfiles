@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Setup passwordless commands
-echo 'hillburn ALL=(ALL) NOPASSWD: /usr/bin/pacman, /usr/bin/paru, /usr/bin/systemctl' | sudo tee /etc/sudoers.d/hillburn
+echo 'alex ALL=(ALL) NOPASSWD: /usr/bin/pacman, /usr/bin/paru, /usr/bin/systemctl' | sudo tee /etc/sudoers.d/alex
 
 # Install Git (needed for paru)
 sudo pacman -S git
@@ -12,18 +12,18 @@ cd /tmp/paru
 makepkg -si
 
 # Intall other packages
-paru -S adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty anki arandr bat cups deluge-gtk dosfstools dunst exa feh fzf gnome-keyring gnumeric maim man-db mumble neovim ntfs-3g pamixer pass pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip zip zoxide zsh
+paru -S 1password adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty amd-ucode anki arandr bat cups deluge-gtk dmenu dosfstools dunst exa feh firefox fzf gnome-keyring gnumeric i3-wm i3blocks maim man-db mumble neovim ntfs-3g pamixer pass pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip zip zoxide zsh
 
 # Set up dotfiles
 git clone "https://github.com/hildebro/dotfiles" /tmp/dotfiles
-cp -rfT /tmp/dotfiles /home/hillburn
-mv /home/hillburn/.git /home/hillburn/.dotfiles
+cp -rfT /tmp/dotfiles /home/alex
+mv /home/alex/.git /home/alex/.dotfiles
 
 # Change shell to zsh
 chsh -s $(which zsh)
 
 # Remove bash* files from home directory
-find /home/hillburn -name 'bash*' -type f -delete
+find /home/alex -name 'bash*' -type f -delete
 
 # Setup reflector for pacman mirrorlist
 sudo pacman -S reflector
@@ -42,7 +42,7 @@ EOF
 
 # Setup docker
 sudo pacman -S docker docker-compose
-sudo usermod -aG docker hillburn
+sudo usermod -aG docker alex
 sudo systemctl enable --now docker.service
 
 # Setup hostname resolution
@@ -50,7 +50,7 @@ sudo pacman -S avahi nss-mdns
 sudo systemctl enable --now avahi-daemon.service
 
 # Setup greetd
-sudo pacman -S greetd tuigreet xorg-server xorg-xinit
+sudo pacman -S greetd greetd-tuigreet xorg-server xorg-xinit
 cat <<EOF | sudo tee /etc/greetd/config.toml
 [terminal]
 # The VT to run the greeter on. Can be "next", "current" or a number
@@ -73,3 +73,4 @@ sudo systemctl enable --now greetd.service
 
 # cleanup vim and zsh configs
 # init gpg
+# enable multilib
