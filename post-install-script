@@ -12,7 +12,7 @@ cd /tmp/paru
 makepkg -si
 
 # Intall other packages
-paru -S 1password adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty amd-ucode anki arandr bat cups deluge-gtk dmenu dosfstools dunst exa feh firefox fzf gnome-keyring gnumeric i3-wm i3blocks maim man-db mumble neovim ntfs-3g pamixer pass pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip zip zoxide zsh
+paru -S 1password adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty amd-ucode arandr bat bind blueman bluez bluez-utils cups deluge-gtk dmenu dosfstools dunst exa feh firefox fzf gnome-keyring gnumeric i3-wm i3blocks intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre maim man-db mumble neovim ntfs-3g pamixer pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock sof-firmware starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip wireplumbe zip zoxide zsh
 
 # Set up dotfiles
 git clone "https://github.com/hildebro/dotfiles" /tmp/dotfiles
@@ -71,6 +71,19 @@ user = "greeter"
 EOF
 sudo systemctl enable --now greetd.service
 
+# Enable bluetooth
+sudo systemctl enable --now bluetooth
+
+# firefox fullscreen thingy
+#Type about:config in the address bar, then search for "full-screen-api.ignore-widgets" Set that to true.
+
+# backlight control
+sudo usermod -aG video alex
+# udev rules.d backlight.rules
+# ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
+
 # cleanup vim and zsh configs
 # init gpg
 # enable multilib
+# change dotfile remote and switch branch
+# run remaps after pacman
