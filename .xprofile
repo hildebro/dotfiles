@@ -9,8 +9,6 @@ xset s off -dpms
 # screenlayout &
 # use Xresources for colors, scaling, etc.
 xrdb -merge ~/.config/Xresources &
-# set background
-feh --no-fehbg --bg-scale '/home/alex/.cache/wall.jpg' &
 # start compositor for some graphical enchancements
 picom &
 # keyboard customization

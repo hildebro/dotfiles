@@ -28,6 +28,9 @@ bar {
 	tray_output primary
 }
 
+# set background image
+exec_always feh --no-fehbg --bg-scale '/home/alex/.cache/wall.jpg'
+
 #TODO bindsym XF86Bluetooth		exec
 
 # #---Special Key Bindings---# #
