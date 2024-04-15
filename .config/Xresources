@@ -4,7 +4,7 @@
 !! Set a default font and font size as below:
 *font: monospace:size=14
 
-Xft.dpi: 175
+Xft.dpi: 125
 
 /* name		dark	light */
 /* black	0	8 */
