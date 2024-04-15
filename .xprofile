@@ -6,7 +6,7 @@ xset b off
 # don't turn off the monitors automatically
 xset s off -dpms
 # apply xrandr config (run this before other scripts in case they might interact with resolution in any way)
-# screenlayout &
+officescreen &
 # use Xresources for colors, scaling, etc.
 xrdb -merge ~/.config/Xresources &
 # start compositor for some graphical enchancements
