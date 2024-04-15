@@ -14,8 +14,8 @@ gaps inner 5
 gaps outer 5
 set $term --no-startup-id $TERMINAL
 set $mod Mod4
-set $shutdown sudo -A shutdown -h now
-set $reboot sudo -A reboot
+set $shutdown shutdown -h now
+set $reboot reboot
 set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 set $hibernate sudo -A systemctl suspend
 
