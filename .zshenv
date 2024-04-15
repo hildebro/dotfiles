@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Font size
+export GDK_DPI_SCALE=1.25
+
 # Adds `~/.local/bin` and subfolders to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 # Adds `./bin` to $PATH where some projects put their executables

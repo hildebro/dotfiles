@@ -1,54 +1,24 @@
 #!/bin/bash
 
 get_gpu_temp() {
-    local gpu_temp=$(sensors | rg edge: | awk -F'[:°.]' '/edge/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
-    echo "$gpu_temp"
+    local gpu_temp=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader)
+    echo "$gpu_temp°C"
 }
 
 get_gpu_usage() {
-    local output=$(radeontop -l 1 -d - | tail -n +2)
-    IFS=',' read -ra output_array <<< "$output"
+    local output=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits)
 
-    join_tuple_string() {
-        local IFS=" "
-        echo "$*"
-    }
+    # Check if output is below 10% to add leading zero
 
-    get_usage() {
-        local field="$1"
-        for x in "${output_array[@]}"; do
-            if [[ $x == *"$field"* ]]; then
-                results=$(echo "$x" | grep -oE '[0-9]+\.[0-9]+(mb|ghz)?')
-                formatted_result=$(join_tuple_string $results)
-		# Remove precision below the decimal point
-                percentage="${formatted_result%.*}%"
+    if [[ $output -lt 10 ]]; then
+      output="0$output"
+    fi
 
-                # Add leading zero below 10% so the statusbar doesn't twitch
-                if [[ "$percentage" =~ ^[0-9]\%$ ]]; then
-                    echo "0$percentage"
-                else
-                    echo "$percentage"
-                fi
-            fi
-        done
-    }
-
-    get_multiple_usages() {
-        local fields=("$@")
-        declare -A result
-        for x in "${fields[@]}"; do
-            result["$x"]=$(get_usage "$x")
-        done
-        echo "${result[@]}"
-    }
-
-    rtop_output=$(get_multiple_usages "gpu")
-    # 100% becomes 99% so the statusbar doesn't twitch
-    echo "${rtop_output[gpu]//100%/99%}"
+    # Adjust percentage if necessary (see note below)
+    echo "${output//100/99}%"
 }
 
 gpu_temp=$(get_gpu_temp)
 gpu_usage=$(get_gpu_usage)
 
 echo "GPU 🌡️$gpu_temp 📈 $gpu_usage"
-

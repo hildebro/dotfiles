@@ -1,7 +1,7 @@
 #!/bin/bash
 
 get_cpu_temp() {
-    local cpu_temp=$(sensors | rg CPUTIN: | awk -F'[:°.]' '/CPUTIN/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
+    local cpu_temp=$(sensors | rg Package | awk -F'[:°.]' '/Package/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
     echo "$cpu_temp"
 }
 

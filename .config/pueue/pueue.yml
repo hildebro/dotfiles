@@ -14,11 +14,11 @@ daemon:
     default: 1
     vagrant: 1
 shared:
-  pueue_directory: /home/hillburn/.local/share/pueue
+  pueue_directory: /home/alex/.local/share/pueue
   use_unix_socket: true
-  unix_socket_path: /home/hillburn/.local/share/pueue/pueue_hillburn.socket
+  unix_socket_path: /home/alex/.local/share/pueue/pueue_alex.socket
   host: 127.0.0.1
   port: "6924"
-  daemon_cert: /home/hillburn/.local/share/pueue/certs/daemon.cert
-  daemon_key: /home/hillburn/.local/share/pueue/certs/daemon.key
-  shared_secret_path: /home/hillburn/.local/share/pueue/shared_secret
+  daemon_cert: /home/alex/.local/share/pueue/certs/daemon.cert
+  daemon_key: /home/alex/.local/share/pueue/certs/daemon.key
+  shared_secret_path: /home/alex/.local/share/pueue/shared_secret
