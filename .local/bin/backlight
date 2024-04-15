@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Constants
+BACKLIGHT_PATH="/sys/class/backlight/intel_backlight"
+MAX_BRIGHTNESS=$(cat "$BACKLIGHT_PATH/max_brightness")
+
+# Function to change backlight
+change_backlight() {
+    op=$1   # Operation: "inc" or "dec"
+    num=$2  # Amount to change
+
+    current_brightness=$(cat "$BACKLIGHT_PATH/brightness")
+
+    # Calculate target brightness
+    if [[ "$op" == "inc" ]]; then
+        target=$((current_brightness + num))
+    else 
+        target=$((current_brightness - num))
+    fi
+
+    # Clamp brightness to valid range
+    target=$((target > MAX_BRIGHTNESS ? MAX_BRIGHTNESS : target))
+    target=$((target < 0 ? 0 : target))
+
+    # Set the new brightness
+    echo "$target" > "$BACKLIGHT_PATH/brightness"
+}
+
+# Handle arguments
+if [[ $# -eq 2 ]]; then
+    case $1 in
+        -inc) change_backlight inc $2 ;;
+        -dec) change_backlight dec $2 ;;
+        *) echo "Usage: backlight.sh [-inc|-dec] NUM" ;;
+    esac
+else
+    echo "Usage: backlight.sh [-inc|-dec] NUM"
+fi
+

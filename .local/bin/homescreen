@@ -1,0 +1,6 @@
+#!/bin/sh
+xrandr --output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --rate 165 --output DP-1 --mode 2560x1440 --pos 2560x0 --rotate normal --rate 165 --primary --output eDP-1 --off
+xrdb -merge ~/.config/Xresources-1440
+i3-msg restart > /dev/null 2>&1
+killall thunderbird
+GDK_DPI_SCALE=1 thunderbird
