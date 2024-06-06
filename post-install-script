@@ -12,7 +12,7 @@ cd /tmp/paru
 makepkg -si
 
 # Intall other packages
-paru -S 1password adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty amd-ucode arandr bat bind blueman bluez bluez-utils cups deluge-gtk dmenu dosfstools dunst exa feh firefox fzf gnome-keyring gnumeric i3-wm i3blocks intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre maim man-db mumble neovim ntfs-3g pamixer pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock sof-firmware starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip wireplumbe zip zoxide zsh
+paru -S 1password adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts alacritty amd-ucode ansible ansible-core arandr bat bind blueman bluez bluez-utils cups deluge-gtk dmenu dosfstools dunst exa feh firefox fzf gnome-keyring gnumeric i3-wm i3blocks intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre maim man-db mumble neovim ntfs-3g pamixer pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rofi rofi-pass rsync signal-desktop slock sof-firmware starship steam telegram-desktop thunderbird ttf-joypixels ttf-liberation unclutter unzip wireplumbe zip zoxide zsh
 
 # Set up dotfiles
 git clone "https://github.com/hildebro/dotfiles" /tmp/dotfiles
