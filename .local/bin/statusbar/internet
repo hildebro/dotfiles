@@ -2,10 +2,7 @@
 
 # check whether any wifi interface exists
 # if so, render an icon depending on the state
-[ -z "$(/usr/bin/ls -A /sys/class/net | rg -e '^w')" ] \
-  || ([ "$(cat /sys/class/net/w*/operstate)" = 'down' ] \
-  && wifiicon="📡" \
-  || wifiicon=$(grep "^\s*w" /proc/net/wireless | awk '{ print "📶", int($3 * 100 / 70) "%" }'))
+wifiicon=$(nmcli -f SIGNAL,IN-USE dev wifi | grep '*' | awk '{print $1}')
 
 # asume ethernet will always be present, render icon depending on state.
 ethericon="🌐"
@@ -14,4 +11,4 @@ if [[ -z "$(rg 'up' /sys/class/net/e*/operstate)" ]]; then
 	ethericon="❎"
 fi
 
-printf "%s %s\n" "$wifiicon" "$ethericon"
+echo "📶 $wifiicon%"
