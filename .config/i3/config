@@ -177,8 +177,8 @@ bindsym XF86AudioMute		exec --no-startup-id lmc mute
 bindsym XF86AudioLowerVolume	exec --no-startup-id lmc down 5
 bindsym XF86AudioRaiseVolume	exec --no-startup-id lmc up 5
 bindsym XF86AudioMicMute	exec --no-startup-id amixer set Capture toggle
-bindsym XF86MonBrightnessDown	exec --no-startup-id light -U 10
-bindsym XF86MonBrightnessUp	exec --no-startup-id light -A 10
+bindsym XF86MonBrightnessDown	exec --no-startup-id backlight -dec 10
+bindsym XF86MonBrightnessUp	exec --no-startup-id backlight -inc 10
 bindsym XF86TouchpadToggle	exec --no-startup-id toggletouchpad
 bindsym XF86TouchpadOn		exec --no-startup-id synclient TouchpadOff=0
 bindsym XF86TouchpadOff		exec --no-startup-id synclient TouchpadOff=1
