@@ -1,14 +1,16 @@
 #!/bin/sh
 
 # check whether any wifi interface exists
-# if so, render an icon depending on the state
-wifiicon=$(nmcli -f SIGNAL,IN-USE dev wifi | grep '*' | awk '{print $1}')
+# if so, render strength of the signal
+wifisignal=$(nmcli -f SIGNAL,IN-USE dev wifi | grep '*' | awk '{print $1}')
 
-# asume ethernet will always be present, render icon depending on state.
-ethericon="🌐"
-if [[ -z "$(rg 'up' /sys/class/net/e*/operstate)" ]]; then
-	# if no ethernet interface is up, switch to DOWN icon
-	ethericon="❎"
-fi
+# etherneticon is not used right now, because the laptop has no ethernet port.
+# kept here in case of a laptop switch in the future.
+#ethericon="🌐"
+#if [[ -z "$(rg 'up' /sys/class/net/e*/operstate)" ]]; then
+#	# if no ethernet interface is up, switch to DOWN icon
+#	ethericon="❎"
+#fi
 
-echo "📶 $wifiicon%"
+# turn 100% signal into 99% so the bar doesn't twich
+echo "📶 ${wifisignal//100/99}%"
