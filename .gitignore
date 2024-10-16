@@ -55,6 +55,7 @@
 .config/Signal
 .config/Slack
 .config/StardewValley/*
+.config/stripe
 .config/sxiv
 .config/syncthing
 .config/Ticket\ to\ Ride
