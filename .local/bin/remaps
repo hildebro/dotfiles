@@ -8,19 +8,11 @@ xset r rate 300 50
 # US layout
 # with Alt Gr enabled
 # with caps mapped to escape
-setxkbmap -layout us -variant altgr-intl -option caps:escape -option lv3:ralt_switch
+setxkbmap -layout eu -option caps:escape
 
 # But when it is pressed only once, treat it as escape.
 #killall xcape 2>/dev/null ; xcape -e 'Super_L=Escape'
 # Map the menu button to right super as well.
 #xmodmap -e 'keycode 135 = Super_R'
 
-# Adding German special characters on Alt Gr layer
-xmodmap -e "keycode 94 = less greater bar"
-xmodmap -e "keycode 38 = a A adiaeresis Adiaeresis adiaeresis Adiaeresis"
-xmodmap -e "keycode 40 = d D odiaeresis Odiaeresis odiaeresis Odiaeresis"
-xmodmap -e "keycode 41 = f F udiaeresis Udiaeresis udiaeresis Udiaeresis"
 
-# Switch z and y
-xmodmap -e "keycode 29 = z"
-xmodmap -e "keycode 52 = y"
