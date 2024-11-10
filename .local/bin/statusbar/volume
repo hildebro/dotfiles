@@ -2,5 +2,5 @@
 
 volume=$(pamixer --get-volume-human)
 
-echo "🎵 "$volume
+echo " "$volume
 

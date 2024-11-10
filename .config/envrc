@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Font size
-export GDK_DPI_SCALE=1.25
+#GDK_DPI_SCALE=1.25
 
 # Adds `~/.local/bin` and subfolders to $PATH
 export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
@@ -24,7 +24,6 @@ export READER="zathura"
 export STATUSBAR="i3blocks"
 
 # Cleanup the home directory
-#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
 export LESSHISTFILE="-"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export INPUTRC="$XDG_CONFIG_HOME/inputrc"
@@ -46,6 +45,7 @@ export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
 export PLATFORMIO_CORE_DIR="$XDG_DATA_HOME"/platformio
 export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
 export TS3_CONFIG_DIR="$XDG_CONFIG_HOME/ts3client"
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 # Other program settings:
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
@@ -60,6 +60,10 @@ export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 export VAGRANT_EXPERIMENTAL="disks"
 
 # Freesync
-export vblank_mode=0
-export mesa_glthread=true
+#export vblank_mode=0
+#export mesa_glthread=true
+
+# GPG ssh functionality
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
 

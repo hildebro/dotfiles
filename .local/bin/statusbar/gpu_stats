@@ -1,24 +1,22 @@
 #!/bin/bash
 
 get_gpu_temp() {
-    local gpu_temp=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader)
-    echo "$gpu_temp°C"
+    gpu_temp=$(sensors | rg -A10 amdgpu-pci-0900 | rg junction | awk '{print $2}' | awk -F'.' '{print $1}' | sed 's/+//')
+    echo "${gpu_temp%C}°C"
 }
 
 get_gpu_usage() {
-    local output=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits)
-
-    # Check if output is below 10% to add leading zero
-
-    if [[ $output -lt 10 ]]; then
-      output="0$output"
-    fi
-
+    gpu_usage=$(radeontop -l 1 -d - | awk 'NR==2{print $5}' | sed 's/\..*//')
     # Adjust percentage if necessary (see note below)
-    echo "${output//100/99}%"
+    if [[ $gpu_usage -lt 10 ]]; then
+        gpu_usage="0$gpu_usage"
+    fi
+    echo "${gpu_usage//100/99}%"
 }
 
 gpu_temp=$(get_gpu_temp)
 gpu_usage=$(get_gpu_usage)
 
-echo "GPU 🌡️$gpu_temp 📈 $gpu_usage"
+echo " $gpu_temp $gpu_usage"
+
+    

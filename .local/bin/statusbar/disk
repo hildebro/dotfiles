@@ -4,4 +4,4 @@
 # $1 should be drive mountpoint
 # $2 is optional icon, otherwise mountpoint will displayed
 
-printf "%s %s\n" "💾" "$(df -h / | awk ' /[0-9]/ {print $4}')"
+printf "%s %s\n" "" "$(df -h / | awk ' /[0-9]/ {print $4}')"

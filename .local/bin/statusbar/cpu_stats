@@ -1,24 +1,24 @@
 #!/bin/bash
 
 get_cpu_temp() {
-    local cpu_temp=$(sensors | rg Package | awk -F'[:°.]' '/Package/ {gsub(/[+[:space:]]/, "", $2); printf "%s°C\n", $2}')
-    echo "$cpu_temp"
+  local cpu_temp=$(sensors | grep CPUTIN | awk '{print $2}' | cut -d '+' -f2 | cut -d '.' -f1)
+  echo "$cpu_temp°C"
 }
 
 get_cpu_usage() {
-    local cpu_usage=$(top -bn1 | awk '/^%Cpu/{printf "%.0f%\n", 100 - $8}')
+  local cpu_usage=$(top -bn1 | awk '/^%Cpu/{printf "%.0f%\n", 100 - $8}')
 
-    # Add leading zero below 10% so the statusbar doesn't twitch
-    if [[ "$cpu_usage" =~ ^[0-9]\%$ ]]; then
-        cpu_usage="0$cpu_usage"
-    fi
+  # Add leading zero below 10% so the statusbar doesn't twitch
+  if [[ "$cpu_usage" =~ ^[0-9]\%$ ]]; then
+    cpu_usage="0$cpu_usage"
+  fi
 
-    # 100% becomes 99% so the statusbar doesn't twitch
-    echo "${cpu_usage//100%/99%}"
+  # 100% becomes 99% so the statusbar doesn't twitch
+  echo "${cpu_usage//100%/99%}"
 }
 
 cpu_temp=$(get_cpu_temp)
 cpu_usage=$(get_cpu_usage)
 
-echo "CPU 🌡️$cpu_temp 📈 $cpu_usage"
+echo " $cpu_temp $cpu_usage"
 

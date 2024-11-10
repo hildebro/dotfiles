@@ -4,6 +4,11 @@
 # if so, render strength of the signal
 wifisignal=$(nmcli -f SIGNAL,IN-USE dev wifi | grep '*' | awk '{print $1}')
 
+if [[ ! -z "$wifisignal" ]]; then
+   # turn 100% signal into 99% so the bar doesn't twich
+    echo "  ${wifisignal//100/99}%" 
+fi
+
 # etherneticon is not used right now, because the laptop has no ethernet port.
 # kept here in case of a laptop switch in the future.
 #ethericon="🌐"
@@ -12,5 +17,3 @@ wifisignal=$(nmcli -f SIGNAL,IN-USE dev wifi | grep '*' | awk '{print $1}')
 #	ethericon="❎"
 #fi
 
-# turn 100% signal into 99% so the bar doesn't twich
-echo "📶 ${wifisignal//100/99}%"
