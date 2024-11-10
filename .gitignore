@@ -27,6 +27,7 @@
 .config/gtk-*
 .config/gzdoom
 .config/hetznerbot.toml
+.config/java
 .config/Jackbox\ Games
 .config/JetBrains
 .config/jgit
