@@ -1,0 +1,227 @@
+# vim: filetype=i3
+# File originally by Luke Smith <https://lukesmith.xyz>
+
+# This config file will use environmental variables such as $BROWSER and $TERMINAL.
+# You can set these variables in ~/.profile or ~/.bash_profile if you have it as below:
+#
+# export FILE="ranger"
+# export TERMINAL="st"
+
+# #---Basic Definitions---# #
+#font pango:SourceCodePro, FontAwesome, Inconsolata Medium 8
+for_window [class="^.*"] border pixel 2
+gaps inner 5
+gaps outer 5
+set $term --no-startup-id $TERMINAL
+set $mod Mod4
+set $shutdown shutdown -h now
+set $reboot reboot
+set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
+set $hibernate sudo -A systemctl suspend
+
+bar {
+        font pango:Linux Libertine 11
+	status_command i3blocks
+	position top
+	mode dock
+	tray_output primary
+}
+	#modifier None
+
+# set background image
+exec_always feh --no-fehbg --bg-scale '/home/alex/.cache/wall.jpg'
+
+#TODO bindsym XF86Bluetooth		exec
+
+# #---Special Key Bindings---# #
+bindsym $mod+Return 		exec $term
+bindsym $mod+Shift+Return	exec --no-startup-id samedir
+
+bindsym $mod+space		focus mode_toggle
+bindsym $mod+Shift+space 	floating toggle
+
+bindsym $mod+Insert		exec --no-startup-id showclip
+
+bindsym Print 			exec --no-startup-id maimpick
+
+bindsym $mod+equal		exec --no-startup-id pamixer -i 5 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+Shift+equal	exec --no-startup-id pamixer -i 15 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+minus 		exec --no-startup-id pamixer -d 5 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+bindsym $mod+Shift+minus	exec --no-startup-id pamixer -d 15 && pkill -RTMIN+10 "${STATUSBAR:?}" &
+
+# #---Letter Key Bindings---# #
+bindsym $mod+q			[con_id="__focused__" instance="^(?!dropdown_).*$"] kill
+bindsym $mod+Shift+q		[con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
+
+bindsym $mod+r		        mode "resize"
+
+# mode to resize windows
+mode "resize" {
+        # vim keys
+	bindsym h resize shrink width 1 px or 1 ppt
+        bindsym k resize grow height 1 px or 1 ppt
+        bindsym j resize shrink height 1 px or 1 ppt
+        bindsym l resize grow width 1 px or 1 ppt
+
+        # arrow keys
+	bindsym Left resize shrink width 1 px or 1 ppt
+        bindsym Up resize grow height 1 px or 1 ppt
+        bindsym Down resize shrink height 1 px or 1 ppt
+        bindsym Right resize grow width 1 px or 1 ppt
+
+        # exit mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+t			split toggle
+bindsym $mod+u			exec --no-startup-id sudo msi-rgb 0 0 0 -x
+
+bindsym $mod+i 			exec $term -e pulsemixer
+
+bindsym $mod+o 			exec --no-startup-id switch-speakers
+bindsym $mod+p 			exec --no-startup-id switch-headphones
+bindsym $mod+a			exec --no-startup-id $term -e bc
+
+bindsym $mod+s			sticky toggle
+
+bindsym $mod+d			exec --no-startup-id rofi -show run
+
+bindsym $mod+f			fullscreen toggle
+
+bindsym $mod+h			focus left
+bindsym $mod+Shift+h		move left 30
+
+bindsym $mod+j			focus down
+bindsym $mod+Shift+j		move down 30
+
+bindsym $mod+k			focus up
+bindsym $mod+Shift+k		move up 30
+
+bindsym $mod+l			focus right
+bindsym $mod+Shift+l		move right 30
+
+bindsym $mod+b			floating toggle; sticky toggle; exec --no-startup-id hover left
+
+bindsym $mod+n			floating toggle; sticky toggle; exec --no-startup-id hover right
+
+bindsym $mod+m 			exec --no-startup-id amixer set Capture toggle
+bindsym $mod+Shift+m		exec --no-startup-id pamixer -t && pkill -RTMIN+10 "${STATUSBAR:?}" &
+
+bindsym $mod+Ctrl+m		exec $term -e pulsemixer
+
+# #---Workspace Bindings---# #
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+##### MACHINE-SPECIFIC VALUES. LEAVE EMPTY ON MAIN
+##### END MACHINE-SPECIFIC
+
+# switch to workspace
+bindsym $mod+1		workspace $ws1
+bindsym $mod+2		workspace $ws2
+bindsym $mod+3		workspace $ws3
+bindsym $mod+4		workspace $ws4
+bindsym $mod+5		workspace $ws5
+bindsym $mod+6		workspace $ws6
+bindsym $mod+7		workspace $ws7
+bindsym $mod+8		workspace $ws8
+bindsym $mod+9		workspace $ws9
+bindsym $mod+0		workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1	move container to workspace $ws1
+bindsym $mod+Shift+2	move container to workspace $ws2
+bindsym $mod+Shift+3	move container to workspace $ws3
+bindsym $mod+Shift+4	move container to workspace $ws4
+bindsym $mod+Shift+5	move container to workspace $ws5
+bindsym $mod+Shift+6	move container to workspace $ws6
+bindsym $mod+Shift+7	move container to workspace $ws7
+bindsym $mod+Shift+8	move container to workspace $ws8
+bindsym $mod+Shift+9	move container to workspace $ws9
+bindsym $mod+Shift+0	move container to workspace $ws10
+
+# #---Function Buttons---# #
+bindsym $mod+F1		exec --no-startup-id dmenumount
+bindsym $mod+F2		exec --no-startup-id dmenuumount
+bindsym $mod+F3		exec --no-startup-id displayselect
+bindsym $mod+F4		exec $term -e nmtui
+bindsym $mod+Shift+F4	exec --no-startup-id $netrefresh
+bindsym $mod+F7		restart
+bindsym --release $mod+F8		exec --no-startup-id slock
+bindsym $mod+F9         exec swaynag -m 'Exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+F10        exec swaynag -m 'Hibernate?' -B 'Yes' '$hibernate'
+bindsym $mod+F11        exec swaynag -m 'Reboot?' -B 'Yes' '$reboot'
+bindsym $mod+F12        exec swaynag -m 'Shutdown?' -B 'Yes' '$shutdown'
+
+# #---Arrow Keys---# #
+bindsym $mod+Left		focus left
+bindsym $mod+Down		focus down
+bindsym $mod+Up			focus up
+bindsym $mod+Right 		focus right
+bindsym $mod+Shift+Left		move left
+bindsym $mod+Shift+Down		move down
+bindsym $mod+Shift+Up		move up
+bindsym $mod+Shift+Right 	move right
+
+# #---Extra XF86 Keys---# #
+bindsym XF86AudioMute		exec --no-startup-id lmc mute
+bindsym XF86AudioLowerVolume	exec --no-startup-id lmc down 5
+bindsym XF86AudioRaiseVolume	exec --no-startup-id lmc up 5
+bindsym XF86AudioMicMute	exec --no-startup-id amixer set Capture toggle
+bindsym XF86MonBrightnessDown	exec --no-startup-id backlight -dec 10
+bindsym XF86MonBrightnessUp	exec --no-startup-id backlight -inc 10
+bindsym XF86TouchpadToggle	exec --no-startup-id toggletouchpad
+bindsym XF86TouchpadOn		exec --no-startup-id synclient TouchpadOff=0
+bindsym XF86TouchpadOff		exec --no-startup-id synclient TouchpadOff=1
+
+# #---Application Specific Window Traits---# #
+
+# General dropdown window traits. The order can matter.
+for_window [instance="dropdown_*"] floating enable
+for_window [instance="dropdown_*"] move scratchpad
+for_window [instance="dropdown_*"] sticky enable
+for_window [instance="dropdown_*"] scratchpad show
+for_window [instance="dropdown_tmuxdd"] resize set 625 450
+for_window [instance="dropdown_dropdowncalc"] resize set 800 300
+for_window [instance="dropdown_tmuxdd"] border pixel 3
+for_window [instance="dropdown_dropdowncalc"] border pixel 2
+for_window [instance="dropdown_*"] move position center
+
+# Miscellaneous traits
+for_window [class="Pinentry"] sticky enable
+for_window [class="sent"] border pixel 0px
+for_window [window_role="GtkFileChooserDialog"] resize set 800 600
+for_window [window_role="GtkFileChooserDialog"] move position center
+for_window [title="Default - Wine desktop"] floating enable
+
+# https://github.com/ValveSoftware/steam-for-linux/issues/1040
+for_window [class="^Steam$" title="^Friends$"] floating enable
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
+
+# Fix for Origin startup issues.
+for_window [instance="origin.exe"] floating enable
+
+# #---Workspace assignments---# #
+for_window [class="(?i)Thunderbird"] move window to workspace $ws3
+assign [instance="mumble"] 4
+for_window [class="firefox" title="Chat — Mozilla Firefox"] move window to workspace $ws5
+assign [instance="telegram-desktop"] 6
+assign [instance="jetbrains"] 7
+
