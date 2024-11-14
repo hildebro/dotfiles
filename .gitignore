@@ -90,6 +90,7 @@
 .java
 .klei
 .local/bin/work
+.local/bin/stripe
 .local/share
 .local/src
 .local/state
