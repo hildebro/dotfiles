@@ -22,6 +22,7 @@
 .config/dolphin-emu
 .config/duckstation/*
 .config/filezilla
+.config/GIMP
 .config/godot
 .config/google-chrome*
 .config/gtk-*
