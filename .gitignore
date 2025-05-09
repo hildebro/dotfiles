@@ -28,6 +28,8 @@
 .config/gtk-*
 .config/gzdoom
 .config/hetznerbot.toml
+.config/hypr/monitors.conf
+.config/hypr/workspaces.conf
 .config/java
 .config/Jackbox\ Games
 .config/JetBrains
