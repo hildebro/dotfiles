@@ -1,6 +1,6 @@
 #!/bin/sh
 
-telegram-desktop &
+Telegram &
 thunderbird &
 1password &
 dunst &
