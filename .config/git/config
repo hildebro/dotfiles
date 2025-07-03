@@ -1,15 +1,48 @@
-[user]
-	email = alex@hilde.dev
-	name = Alexander Hildebrandt
-	signingkey = D9ABAE8B4FDA0A4A
-[pull]
-	rebase = true
+[branch]
+    sort = -committerdate
+[column]
+    ui = auto
 [commit]
 	gpgsign = true
+    verbose = true
+[core]
+	autocrlf = input
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[core]
-	autocrlf = input
+[help]
+    autocorrect = prompt
+[init]
+    defaultBranch = main
+[merge]
+    conflictstyle = zdiff3
+[pull]
+	rebase = true
+[push]
+    autoSetupRemote = true
+    followTags = true
+[rerere]
+    enabled = true
+    autoupdate = true
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+[tag]
+    sort = version:refname
+[user]
+	email = alex@hilde.dev
+	name = Alexander Hildebrandt
+	signingkey = D9ABAE8B4FDA0A4A
+
