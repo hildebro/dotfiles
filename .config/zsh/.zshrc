@@ -124,6 +124,52 @@ lfcd () {
 }
 bindkey -s '^o' 'lfcd\n'
 
+########## Janky solution for tab completion of project-specific ./bin folder ##########
+# If the current directory has a ./bin folder,
+# the absolute path to it is stored in this global.
+typeset -g _current_dir_bin_path=""
+
+# On dir change
+chpwd() {
+    local new_path=""
+    local old_path_elements
+    local element
+
+    # If the previous dir had a bin folder,
+    # remove it from PATH and clear out the global variable.
+    if [[ -n "$_current_dir_bin_path" ]]; then
+        # Split PATH into elements and filter out the old project path
+        old_path_elements=("${(@ps/:/)PATH}") # Zsh specific split by ':'
+        for element in "${old_path_elements[@]}"; do
+            if [[ "$element" != "$_current_dir_bin_path" ]]; then
+                if [[ -z "$new_path" ]]; then
+                    new_path="$element"
+                else
+                    new_path="$new_path:$element"
+                fi
+            fi
+        done
+        PATH="$new_path"
+        _current_dir_bin_path=""
+    fi
+
+    # If the new dir has a bin folder,
+    # add it to PATH and fill the global variable.
+    if [[ -d "./bin" ]]; then
+        local project_bin_abs_path="$(pwd)/bin"
+
+        # Ensure we don't add duplicate if somehow already there (shouldn't be after step 1)
+        if ! print -l "$PATH" | grep -q "^${project_bin_abs_path}$"; then
+            export PATH="${project_bin_abs_path}:$PATH"
+            _current_dir_bin_path="$project_bin_abs_path" # Store the newly added path
+            rehash # Rehash commands so zsh knows about new executables
+        fi
+    else
+        # If no ./bin in the new directory, make sure _current_dir_bin_path is cleared
+        _current_dir_bin_path=""
+    fi
+}
+
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
