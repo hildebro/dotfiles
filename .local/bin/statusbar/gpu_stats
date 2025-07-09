@@ -6,7 +6,7 @@ get_gpu_temp() {
 }
 
 get_gpu_usage() {
-    gpu_usage=$(radeontop -l 1 -d - | awk 'NR==2{print $5}' | sed 's/\..*//')
+    gpu_usage=$(amdgpu_top --json -n 1 | jq -r '.devices[0].gpu_activity.GFX.value')
     # Adjust percentage if necessary (see note below)
     if [[ $gpu_usage -lt 10 ]]; then
         gpu_usage="0$gpu_usage"
