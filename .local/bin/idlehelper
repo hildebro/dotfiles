@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# It is assumed that some idle behavior like locking
+# the screen or dimming it is only relevant for laptops.
+# Hard-code the hostname of your desktop machine, then
+# this command will check, whether it matches.
+DESKTOP_HOSTNAME="archdesk"
+CURRENT_HOSTNAME=$(hostname)
+
+if [ "$CURRENT_HOSTNAME" = "$DESKTOP_HOSTNAME" ]; then
+    exit 1
+else
+    exit 0
+fi
