@@ -60,6 +60,7 @@
 .config/Slack
 .config/StardewValley/*
 .config/stripe
+.config/sunshine
 .config/sxiv
 .config/syncthing
 .config/Ticket\ to\ Ride
@@ -70,6 +71,7 @@
 .config/VirtualBox
 .config/vivaldi*
 .config/vlc
+.config/WebCord
 .config/QtProject.conf
 .config/xbuild
 .config/yuzu
