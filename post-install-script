@@ -2,6 +2,10 @@
 
 # Setup passwordless commands
 echo 'alex ALL=(ALL) NOPASSWD: /usr/bin/pacman, /usr/bin/paru, /usr/bin/systemctl' | sudo tee /etc/sudoers.d/alex
+sudo usermod -aG video alex
+sudo usermod -aG games alex
+sudo usermod -aG audio alex
+sudo usermod -aG wheel alex
 
 # Install Git (needed for paru)
 sudo pacman -S git
@@ -12,7 +16,7 @@ cd /tmp/paru
 makepkg -si
 
 # Intall other packages
-paru -S 1password alacritty amd-ucode ansible ansible-core bat btop cups deluge-gtk dunst exa firefox fzf gamemode gnome-keyring gnumeric grim htop hyprland hyprpolkitagent-git intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre man-db mumble nemo neovim noto-fonts-cjk otf-comicshanns-nerd otf-font-awesome pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rsync signal-desktop slurp starship steam telegram-desktop thunderbird ttf-nerd-fonts-symbols unzip wireplumber wl-clipboard zip zoxide zsh
+paru -S 1password alacritty amd-ucode ansible ansible-core bat btop cups deluge-gtk dunst exa firefox fzf gamemode gnome-keyring gnumeric grim htop hyprland hyprpolkitagent-git intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre man-db mumble nemo neovim noto-fonts-cjk otf-comicshanns-nerd otf-font-awesome pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rsync signal-desktop slurp starship steam telegram-desktop thunderbird ttf-nerd-fonts-symbols unzip uwsm wireplumber wl-clipboard zathura zip zoxide zsh
 
 # In case archinstall doesn't cover everythings
 paru -S lib32-vulkan-radeon vulkan-radeon xf86-video-amdgpu
@@ -50,13 +54,13 @@ vt = 1
 # The default session, also known as the greeter.
 [default_session]
 
-# $(agreety) is the bundled agetty/login-lookalike. You can replace $(/bin/sh)
-# with whatever you want started, such as $(sway).
-command = "tuigreet --cmd start-hyprland"
+# `agreety` is the bundled agetty/login-lookalike. You can replace `/bin/sh`
+# with whatever you want started, such as `sway`.
+command = "tuigreet --asterisks --remember --remember-session --time"
 
 # The user to run the command as. The privileges this user must have depends
 # on the greeter. A graphical greeter may for example require the user to be
-# in the $(video) group.
+# in the `video` group.
 user = "greeter"
 EOF
 sudo systemctl enable --now greetd.service
@@ -73,7 +77,6 @@ sudo systemctl enable --now greetd.service
 ####### TODO turn into commands
 
 # change dotfile remote url to `git` path instead of `https`
-# add /usr/local/bin/start-hyprland
 
 ####### Manual after logging into the clean state
 
