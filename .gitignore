@@ -3,6 +3,7 @@
 # configs that are auto-generated, confidential or otherwise unwanted
 .config/1Password/*
 .config/Android*
+.config/AusweisApp
 .config/aws
 .config/balena-etcher/*
 .config/beets/state.pickle
