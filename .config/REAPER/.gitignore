@@ -1,0 +1,21 @@
+# REAPER specific ignores
+
+# Sensitive License Info
+reaper-reginfo2.ini
+
+# Machine-specific hardware configs
+reaper-midihw-*.ini
+
+# Caches and transient state
+reaper-vstplugins*.ini
+reaper-recentfx.ini
+reaper-wndpos.ini
+MetadataCaches/
+
+# Installation info
+reaper-install-rev.txt
+
+# Other irrelevant stuff
+Data
+Scripts
+Effects
