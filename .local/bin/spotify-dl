@@ -25,19 +25,52 @@ fi
 
 echo "--- Starting download and transfer process ---"
 
+# Check for jq dependency
+if ! command -v jq &> /dev/null; then
+    echo "Error: 'jq' is not installed. Please install it to continue (e.g., 'sudo pacman -S jq')."
+    exit 1
+fi
+
 echo "1. Changing to virtual environment directory and activating..."
 cd "$SPOTDL_VENV_DIR"
 source bin/activate
 
-echo "2. Downloading song: '$1'..."
+echo "2. Getting expected track count..."
+EXPECTED_COUNT=$(spotdl save "$1" --log-level WARNING --save-file - | jq '.[0].tracks_count')
+
+# Verify that we got a valid number
+if ! [[ "$EXPECTED_COUNT" =~ ^[0-9]+$ ]] || [ "$EXPECTED_COUNT" -eq 0 ]; then
+    echo "Error: Could not determine a valid track count from the URL. Exiting."
+    deactivate
+    exit 1
+fi
+echo "    - Expected song count: $EXPECTED_COUNT"
+
+# Download/Retry Logic
+echo "3. Downloading songs..."
 spotdl download "$1" --output '{track-number} {artist} {title}' --overwrite skip
 
-if ! compgen -G "*.mp3" > /dev/null; then
-    echo "Error: No MP3 files were downloaded. Exiting."
+# Count how many files were actually downloaded
+DOWNLOADED_COUNT=$(ls -1 -- *.mp3 2>/dev/null | wc -l)
+
+if [ "$DOWNLOADED_COUNT" -lt "$EXPECTED_COUNT" ]; then
+    echo "Warning: Download was incomplete ($DOWNLOADED_COUNT/$EXPECTED_COUNT). Retrying once..."
+    spotdl download "$1" --output '{track-number} {artist} {title}' --overwrite skip
+    DOWNLOADED_COUNT=$(ls -1 -- *.mp3 2>/dev/null | wc -l)
+fi
+
+# Final check after any potential retry
+if [ "$DOWNLOADED_COUNT" -lt "$EXPECTED_COUNT" ]; then
+    echo "Error: Download failed again. Found only $DOWNLOADED_COUNT of $EXPECTED_COUNT songs. Exiting."
+    deactivate
     exit 1
 fi
 
-echo "3. Extracting artist and album metadata..."
+echo "    - Successfully downloaded $DOWNLOADED_COUNT song(s)."
+
+# --- Script continues as before ---
+
+echo "4. Extracting artist and album metadata..."
 # Grab the first mp3 file found in the current directory
 MP3_FILE=$(find . -maxdepth 1 -name "*.mp3" -print -quit)
 
@@ -54,18 +87,18 @@ if [ -z "$ARTIST" ] || [ -z "$ALBUM" ]; then
     exit 1
 fi
 
-echo "   - Artist: $ARTIST"
-echo "   - Album:  $ALBUM"
+echo "    - Artist: $ARTIST"
+echo "    - Album:  $ALBUM"
 
-echo "4. Checking for remote directory and creating if it doesn't exist..."
+echo "5. Checking for remote directory and creating if it doesn't exist..."
 # Create the full remote path. We use sed to handle any single quotes in the artist/album names.
 REMOTE_DIR="${REMOTE_MUSIC_DIR}/$(echo "$ARTIST" | sed "s/'/\\\'/g")/$(echo "$ALBUM" | sed "s/'/\\\'/g")"
 ssh "$SSH_TARGET" "mkdir -p \"$REMOTE_DIR\""
 
-echo "5. Transferring files to $SSH_TARGET:$REMOTE_DIR..."
+echo "6. Transferring files to $SSH_TARGET:$REMOTE_DIR..."
 scp *.mp3 "$SSH_TARGET:$REMOTE_DIR/"
 
-echo "6. Deactivating virtual environment and removing local mp3 files..."
+echo "7. Deactivating virtual environment and removing local mp3 files..."
 deactivate
 rm -v *.mp3
 
