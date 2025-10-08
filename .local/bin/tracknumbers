@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if a folder argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <folder>"
+  exit 1
+fi
+
+FOLDER="$1"
+TRACK_NUMBER=1
+
+# Find all mp3 files, sort them by filename, and process each one
+find "$FOLDER" -maxdepth 1 -type f -name "*.mp3" | sort | while read -r FILENAME; do
+  # Format the track number with leading zeros (e.g., 01, 02, ...)
+  FORMATTED_TRACK_NUMBER=$(printf "%02d" "$TRACK_NUMBER")
+
+  echo "Processing: $FILENAME - Assigning track number: $FORMATTED_TRACK_NUMBER"
+  id3v2 -T "$FORMATTED_TRACK_NUMBER" "$FILENAME"
+
+  TRACK_NUMBER=$((TRACK_NUMBER + 1))
+done

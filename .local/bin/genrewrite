@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# This script applies a list of genres to music files in a specified directory
+# using the id3v2 command-line tool.
+# It targets MP3 files as id3v2 is designed for them.
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <music_folder_path> <genre1,genre2,genre3,...>"
+    echo "Example: $0 ./ 'Rock,Indie'"
+    exit 1
+fi
+
+directory_path="$1"
+genre_string="$2"
+
+# Check if the provided path is a directory
+if [ ! -d "$directory_path" ]; then
+    echo "Error: '$directory_path' is not a valid directory."
+    exit 1
+fi
+
+# Find all mp3 files and run genrefix on each
+find "$directory_path" -type f -name "*.mp3" | while read -r mp3_file; do
+    echo "Processing: $mp3_file"
+    id3v2 -g "$genre_string" "$mp3_file"
+done
+
+exit 0
