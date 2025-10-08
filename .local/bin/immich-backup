@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+cd /srv/immich
+
+docker exec -t immich_postgres pg_dumpall --clean --if-exists --username=postgres | \
+    pv -N "DB Dump" | \
+    gzip > "/srv/private/immich-bk/database_$(date +%Y-%m-%d).sql.gz"
+
+docker compose stop
+
+tar cf - library -P | \
+    pv -s $(du -sb library | awk '{print $1}') | \
+    gzip >  "/srv/private/immich-bk/filesystem_$(date +%Y-%m-%d).tar.gz"
+
+docker compose up -d
