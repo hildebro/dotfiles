@@ -1,22 +1,104 @@
 #!/bin/bash
+set -euo pipefail
 
-get_gpu_temp() {
-    gpu_temp=$(sensors | rg -A10 amdgpu-pci-0900 | rg junction | awk '{print $2}' | awk -F'.' '{print $1}' | sed 's/+//')
-    echo "${gpu_temp%C}°C"
-}
-
-get_gpu_usage() {
-    gpu_usage=$(amdgpu_top --json -n 1 | jq -r '.devices[0].gpu_activity.GFX.value')
-    # Adjust percentage if necessary (see note below)
-    if [[ $gpu_usage -lt 10 ]]; then
-        gpu_usage="0$gpu_usage"
-    fi
-    echo "${gpu_usage//100/99}%"
-}
-
-gpu_temp=$(get_gpu_temp)
-gpu_usage=$(get_gpu_usage)
-
-echo " $gpu_temp $gpu_usage"
-
+format_usage() {
+    local val=$1
+    val=${val%.*} # Strip decimals
     
+    # Check if integer
+    if ! [[ "$val" =~ ^[0-9]+$ ]]; then
+        echo "??%"
+        return
+    fi
+
+    if [[ "$val" -lt 10 ]]; then
+        val="0$val"
+    elif [[ "$val" -ge 100 ]]; then
+        val="99"
+    fi
+    echo "${val}%"
+}
+
+get_amd_stats() {
+    local temp=""
+    local usage=""
+
+    # Temp: Try junction, then edge, then generic
+    temp=$(sensors 2> /dev/null | awk '/amdgpu-pci-/{flag=1; next} /Adapter:/{flag=0} flag' | grep -m1 -E "junction|edge|temp1" | awk '{print $2}' | tr -d '+°C' | cut -d. -f1)
+
+    # Usage: Try amdgpu_top -> sysfs
+    if command -v amdgpu_top &> /dev/null && command -v jq &> /dev/null; then
+        usage=$(amdgpu_top --json -n 1 | jq -r '.devices[0].gpu_activity.GFX.value' 2>/dev/null)
+    fi
+    
+    if [[ -z "$usage" || "$usage" == "null" ]]; then
+        # Check standard sysfs paths for card0 or card1
+        for card in /sys/class/drm/card*; do
+            if [[ -f "$card/device/gpu_busy_percent" ]]; then
+                usage=$(cat "$card/device/gpu_busy_percent")
+                break
+            fi
+        done
+    fi
+
+    echo "${temp:-??} $(format_usage "${usage:-0}")"
+}
+
+get_nvidia_stats() {
+    local temp=""
+    local usage=""
+    
+    # We already confirmed the driver is active in the main logic
+    local output=$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu --format=csv,noheader,nounits)
+    temp=$(echo "$output" | cut -d ',' -f1)
+    usage=$(echo "$output" | cut -d ',' -f2)
+
+    echo "${temp:-??} $(format_usage "${usage:-0}")"
+}
+
+get_intel_stats() {
+    local temp=""
+    local usage=""
+
+    # 1. Get Temperature
+    # Tries to find a Package temp, which is usually accurate for the iGPU die.
+    temp=$(sensors 2> /dev/null | awk '/Package id 0/ {print $4}' | tr -d '+°C' | cut -d. -f1 | head -n1)
+
+    if command -v intel_gpu_top &> /dev/null; then
+        # We only take one line of output, then head automatically quits the top-process
+        # By setting -s 1 we ensure the top command executes very quickly.
+        usage=$(timeout -s SIGINT 0.5s /usr/bin/intel_gpu_top -l -s 500 | head -n 3 | tail -n 1 | awk '{print $7}')
+    fi
+    
+    echo "${temp:-??} $(format_usage "${usage:-0}")"
+}
+
+# --- Main Logic ---
+
+# 1. Check for AMD
+# We look for the kernel module text file specifically
+if lsmod | grep -q "^amdgpu"; then
+    read temp usage <<< "$(get_amd_stats)"
+
+# 2. Check for NVIDIA (The fix for your specific issue)
+# Even if nvidia-smi is installed, /proc/driver/nvidia only exists if the module is loaded and active.
+# If you are in "hybrid" mode and the card is off (bbswitch/prime), this directory usually vanishes or is empty.
+elif [[ -d "/proc/driver/nvidia" ]] && command -v nvidia-smi &> /dev/null; then
+    # Double check: sometimes the folder exists but the GPU is in deep sleep.
+    # We run a quick check to ensure smi doesn't error out.
+    if nvidia-smi -L &> /dev/null; then
+        read temp usage <<< "$(get_nvidia_stats)"
+    else
+        # Nvidia present but sleeping/erroring -> Fallback to Intel
+        read temp usage <<< "$(get_intel_stats)"
+    fi
+
+# 3. Fallback to Intel
+# This catches cases where:
+# a) No AMD/Nvidia hardware exists
+# b) Nvidia hardware exists but is powered off (the hybrid case)
+else
+    read temp usage <<< "$(get_intel_stats)"
+fi
+
+echo " ${temp}°C $usage"

@@ -1,11 +1,34 @@
 #!/bin/bash
 
 get_cpu_temp() {
-  local cpu_temp=$(sensors | grep CPUTIN | awk '{print $2}' | cut -d '+' -f2 | cut -d '.' -f1)
+  local sensors_out=$(sensors 2> /dev/null)
+
+  # 1. Search for specific keywords in priority order using awk
+  #    - Package id 0: Standard Intel total package temp (Field $4)
+  #    - Tctl: Standard AMD Ryzen control temp (Field $2)
+  #    - CPUTIN: Legacy/Motherboard sensor (Field $2)
+  #    - Core 0: Fallback for older Intel CPUs (Field $3)
+  local raw_temp=$(echo "$sensors_out" | awk '
+    /Package id 0/ { print $4; exit }
+    /Tctl/         { print $2; exit }
+    /CPUTIN/       { print $2; exit }
+    /Core 0/       { print $3; exit }
+  ')
+
+  # Clean up the output
+  local cpu_temp=$(echo "$raw_temp" | tr -d '+' | cut -d '.' -f1)
+
+  # Fallback if no sensor data found
+  if [ -z "$cpu_temp" ]; then
+      cpu_temp="??"
+  fi
+
   echo "$cpu_temp°C"
 }
 
 get_cpu_usage() {
+  # Note: top -bn1 is sometimes inaccurate on the very first run (shows average since boot).
+  # If you notice static values, try: top -bn2 | grep '%Cpu' | tail -n1
   local cpu_usage=$(top -bn1 | awk '/^%Cpu/{printf "%.0f%\n", 100 - $8}')
 
   # Add leading zero below 10% so the statusbar doesn't twitch
@@ -21,4 +44,3 @@ cpu_temp=$(get_cpu_temp)
 cpu_usage=$(get_cpu_usage)
 
 echo " $cpu_temp $cpu_usage"
-
