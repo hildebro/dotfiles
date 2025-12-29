@@ -87,3 +87,5 @@ sudo systemctl enable --now greetd.service
 # Firefox: Force fullscreen to stay inside the window
 # Type about:config in the address bar, then search for "full-screen-api.ignore-widgets" Set that to true.
 
+# start hyprpolkit as service
+# start waybar as service
