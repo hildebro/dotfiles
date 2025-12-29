@@ -62,6 +62,7 @@
 .config/rpcs3
 .config/Signal
 .config/Slack
+.config/spotdl
 .config/StardewValley/*
 .config/stripe
 .config/sunshine
