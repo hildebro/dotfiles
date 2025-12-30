@@ -16,7 +16,7 @@ cd /tmp/paru
 makepkg -si
 
 # Intall other packages
-paru -S 1password alacritty amd-ucode ansible ansible-core bat btop cups deluge-gtk dunst exa firefox fzf gamemode gnome-keyring gnumeric grim htop hyprland hyprpolkitagent-git intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre man-db mumble nemo neovim noto-fonts-cjk otf-comicshanns-nerd otf-font-awesome pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rsync signal-desktop slurp starship steam telegram-desktop thunderbird ttf-nerd-fonts-symbols unzip uwsm wireplumber wl-clipboard zathura zip zoxide zsh
+paru -S 1password alacritty amd-ucode ansible ansible-core bat btop cups deluge-gtk dunst exa firefox fzf gamemode gnome-keyring gnumeric grim htop hyprland hyprpolkitagent-git intellij-idea-ultimate-edition intellij-idea-ultimate-edition-jre keyd man-db mumble nemo neovim noto-fonts-cjk otf-comicshanns-nerd otf-font-awesome pipewire pipewire-alsa pipewire-pulse lib32-pipewire pulsemixer ripgrep rsync signal-desktop slurp starship steam telegram-desktop thunderbird ttf-nerd-fonts-symbols unzip uwsm wireplumber wl-clipboard zathura zip zoxide zsh
 
 # In case archinstall doesn't cover everythings
 paru -S lib32-vulkan-radeon vulkan-radeon xf86-video-amdgpu
@@ -89,3 +89,10 @@ sudo systemctl enable --now greetd.service
 
 # start hyprpolkit as service
 # start waybar as service
+
+# set /etc/keyd/default.conf and enable service
+#[ids]
+#*
+#
+#[main]
+#capslock = esc
