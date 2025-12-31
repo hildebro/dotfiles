@@ -24,7 +24,7 @@ get_amd_stats() {
     local usage=""
 
     # Temp: Try junction, then edge, then generic
-    temp=$(sensors 2> /dev/null | awk '/amdgpu-pci-/{flag=1; next} /Adapter:/{flag=0} flag' | grep -m1 -E "junction|edge|temp1" | awk '{print $2}' | tr -d '+°C' | cut -d. -f1)
+    temp=$(sensors | rg -A10 amdgpu-pci-0900 | rg junction | awk '{print $2}' | awk -F'.' '{print $1}' | sed 's/+//')
 
     # Usage: Try amdgpu_top -> sysfs
     if command -v amdgpu_top &> /dev/null && command -v jq &> /dev/null; then
