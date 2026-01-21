@@ -1,5 +1,5 @@
 * {
-    font-family: Symbols Nerd Font, Font Awesome, ComicShannsMono Nerd Font;
+    font-family: Symbols Nerd Font Mono, Symbols Nerd Font, Font Awesome, ComicShannsMono Nerd Font;
     font-size: 18px;
 }
 
@@ -125,7 +125,7 @@ button:hover {
 #battery {
     background-color: #ffffff;
     color: #000000;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 #battery.charging, #battery.plugged {
