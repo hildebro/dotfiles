@@ -38,7 +38,7 @@ alias \
 alias mpv="mpv --input-ipc-server=/tmp/mpvsoc$(date +%s)"
 
 # Dotfile management
-alias dg='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dg='/usr/bin/git --git-dir ~/.dotfiles --work-tree ~'
 
 # Some other stuff
 alias \
