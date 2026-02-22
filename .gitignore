@@ -9,6 +9,7 @@
 .config/beets/state.pickle
 .config/BraveSoftware
 .config/btop/btop.log
+.config/capacitor
 .config/cef_user_data/*
 .config/chromium
 .config/cmus
@@ -25,6 +26,7 @@
 .config/filezilla
 .config/GIMP
 .config/godot
+.config/Google
 .config/google-chrome*
 .config/gtk-*
 .config/gzdoom
@@ -62,6 +64,7 @@
 .config/rpcs3
 .config/Signal
 .config/Slack
+.config/solaar
 .config/spotdl
 .config/StardewValley/*
 .config/stripe
