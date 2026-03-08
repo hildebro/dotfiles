@@ -23,7 +23,7 @@ cd "$YTDLP_VENV_DIR"
 source bin/activate
 
 echo "2. Getting expected track count..."
-EXPECTED_COUNT=$(yt-dlp --flat-playlist --print id "$1" | wc -l)
+EXPECTED_COUNT=$(yt-dlp --quiet --no-warnings --flat-playlist --print id "$1" | wc -l)
 
 if ! [[ "$EXPECTED_COUNT" =~ ^[0-9]+$ ]] || [ "$EXPECTED_COUNT" -eq 0 ]; then
     echo "Error: Could not determine a valid track count from the URL. Exiting."
@@ -33,7 +33,9 @@ fi
 echo "    - Expected song count: $EXPECTED_COUNT"
 
 echo "3. Downloading songs..."
-yt-dlp -x --audio-format mp3 --audio-quality 0 --embed-metadata -o "%(playlist_index|)s %(artist,uploader)s - %(title)s.%(ext)s" "$1"
+yt-dlp -x --audio-format mp3 --audio-quality 0 --embed-metadata \
+    --trim-filenames 200 \
+    -o "%(playlist_index|)s %(artist,uploader).30s - %(title)s.%(ext)s" "$1"
 
 DOWNLOADED_COUNT=$(ls -1 -- *.mp3 2>/dev/null | wc -l || echo 0)
 
