@@ -11,7 +11,7 @@ album_url=$1
 # Function to create a temporary folder in /tmp
 create_temp_folder() {
   temp_dir=$(mktemp -d /tmp/bandcamp-download.XXXXXX)
-  echo $temp_dir # Return the temporary directory path
+  echo "$temp_dir" # Return the temporary directory path
 }
 
 # Function to extract metadata using ExifTool
@@ -56,8 +56,18 @@ yt-dlp -o "%(playlist_index)02d - %(title)s.%(ext)s" -x --audio-format mp3 --add
 cover_url=$(curl -s "$album_url" | pup '#tralbumArt a.popupImage attr{href}')
 
 # Download the album cover using wget
+cover_file=""
 if [ -n "$cover_url" ]; then
-   wget -O cover.jpg "$cover_url"
+   # Strip trailing URL query parameters (like ?v=123) if they exist
+   clean_url="${cover_url%%\?*}"
+
+   # Extract the file extension
+   extension="${clean_url##*.}"
+
+   # Set the dynamic filename
+   cover_file="cover.${extension}"
+
+   wget -O "$cover_file" "$cover_url"
 fi
 
 # Extract metadata from the first downloaded MP3 file
@@ -73,11 +83,14 @@ fi
 check_and_create_target_dir 
 
 # Copy files to the target music folder
-cp *.mp3 cover.jpg "$target_dir"
+if [ -n "$cover_file" ] && [ -f "$cover_file" ]; then
+  cp *.mp3 "$cover_file" "$target_dir"
+else
+  cp *.mp3 "$target_dir"
+fi
 
 # Clean up the temporary folder
-cd - # Move out of the temporary folder
+cd - > /dev/null # Move out of the temporary folder quietly
 rm -rf "$temp_dir"
 
 echo "Download complete and files copied to $target_dir"
-
