@@ -1,0 +1,15 @@
+#!/bin/bash
+
+chosen=$(echo -e "Suspend\nHibernate\nHybrid-sleep\nSuspend-then-hibernate\n[Cancel]" | tofi)
+# Info about some states are available here:
+# https://www.freedesktop.org/software/systemd/man/systemd-sleep.conf.html#Description
+
+if [[ $chosen = "Suspend" ]]; then
+	systemctl suspend
+elif [[ $chosen = "Hibernate" ]]; then
+	systemctl hibernate
+elif [[ $chosen = "Hybrid-sleep" ]]; then
+	systemctl hibernate
+elif [[ $chosen = "Suspend-then-hibernate" ]]; then
+	systemctl suspend-then-hibernate
+fi
