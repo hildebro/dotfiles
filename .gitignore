@@ -25,6 +25,7 @@
 .config/duckstation/*
 .config/Epic
 .config/filezilla
+.config/gcloud
 .config/GIMP
 .config/godot
 .config/Google
