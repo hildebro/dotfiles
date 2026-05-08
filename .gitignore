@@ -23,6 +23,7 @@
 .config/docker
 .config/dolphin-emu
 .config/duckstation/*
+.config/easyeffects
 .config/Epic
 .config/filezilla
 .config/gcloud
