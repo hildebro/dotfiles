@@ -5,7 +5,7 @@ chosen=$(echo -e "Logout\nShutdown\nReboot\n[Cancel]" | tofi)
 # https://www.freedesktop.org/software/systemd/man/systemd-sleep.conf.html#Description
 
 if [[ $chosen = "Logout" ]]; then
-	hyprctl dispatch exit
+	hyprctl dispatch 'hl.dsp.exit()'
 elif [[ $chosen = "Shutdown" ]]; then
 	systemctl poweroff
 elif [[ $chosen = "Reboot" ]]; then
