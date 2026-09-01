@@ -254,6 +254,13 @@ hl.device({
     sensitivity = 0,
     accel_profile = "flat"
 })
+
+hl.device({
+    name        = "usb-optical-mouse",
+    sensitivity = -0.2,
+    accel_profile = "flat"
+})
+
 --
 
 
@@ -314,7 +321,7 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     
     -- Move active window to a workspace with silently
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, silent = true }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 -- Scratchpad workspace
