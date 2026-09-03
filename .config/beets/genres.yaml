@@ -1,0 +1,67 @@
+tree:
+  # Base tree
+  Ambient: {}
+  Blues: {}
+  Dance:
+    Disco: {}
+  Electronic:
+    Bit Music:
+      Chiptune: {}
+    Chillout:
+      Downtempo: {}
+    Drum and Bass:
+      Jungle: {}
+      Liquid: {}
+    House:
+      Deep House: {}
+    Indietronica:
+      Chillwave: {}
+    Synthwave:
+      Darksynth: {}
+    Vapor:
+      Vaporwave:
+        Eccojams: {}
+  Folk: {}
+  Hip Hop:
+    Abstract Hip Hop: {}
+  Jazz: {}
+  Metal:
+    Alternative Metal: {}
+    Heavy Metal: {}
+  Pop:
+    Alt-Pop: {}
+    City Pop: {}
+    Indie Pop: {}
+  Rock:
+    Alternative Rock: {}
+    Art Rock: {}
+    Indie Rock: {}
+  R&B:
+    Funk: {}
+
+  # Fusion tree
+  Chillsynth: {}
+  EDM:
+    Breakbeat: {}
+    Footwork: {}
+    Techno: {}
+    Trance: {}
+  French House: {}
+
+fusions:
+  Chillsynth:
+    - Synthwave
+    - Chillwave
+  EDM:
+    - Electronic
+    - Dance
+  Future Funk:
+    - French House
+    - Vapor
+  French House:
+    - Disco
+    - House
+
+aliases:
+  "Drum & Bass": Drum and Bass
+  DnB: Drum and Bass
