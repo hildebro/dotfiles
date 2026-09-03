@@ -12,10 +12,13 @@ tree:
     Drum and Bass:
       Jungle: {}
       Liquid: {}
+    Glitch Hop: {}
     House:
       Deep House: {}
+      French House: {}
     Indietronica:
       Chillwave: {}
+      Glitch Pop: {}
     Synthwave:
       Darksynth: {}
     Vapor:
@@ -24,18 +27,28 @@ tree:
   Folk: {}
   Hip Hop:
     Abstract Hip Hop: {}
+    Instrumental Hip Hop: {}
   Jazz: {}
   Metal:
     Alternative Metal: {}
     Heavy Metal: {}
+    Progressive Metal: {}
   Pop:
     Alt-Pop: {}
     City Pop: {}
+    Hyperpop: {}
     Indie Pop: {}
+  Psychedelia:
+    Neo-Psychedelia:
+      Hypnagogic Pop: {}
   Rock:
     Alternative Rock: {}
     Art Rock: {}
+    Hard Rock: {}
     Indie Rock: {}
+    Post-Punk: {}
+    Progressive Rock: {}
+    Psychedelic Rock: {}
   R&B:
     Funk: {}
 
@@ -45,8 +58,8 @@ tree:
     Breakbeat: {}
     Footwork: {}
     Techno: {}
-    Trance: {}
-  French House: {}
+    Trance:
+      Psytrance: {}
 
 fusions:
   Chillsynth:
@@ -56,11 +69,8 @@ fusions:
     - Electronic
     - Dance
   Future Funk:
-    - French House
-    - Vapor
-  French House:
-    - Disco
     - House
+    - Vapor
 
 aliases:
   "Drum & Bass": Drum and Bass
