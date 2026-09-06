@@ -1,5 +1,4 @@
 tree:
-  # Base tree
   Ambient: {}
   Blues: {}
   Dance:
@@ -22,6 +21,8 @@ tree:
     Synthwave:
       Darksynth: {}
     Vapor:
+      Utopian Virtual: {}
+      Vaportrap: {}
       Vaporwave:
         Eccojams: {}
   Folk: {}
@@ -33,26 +34,33 @@ tree:
     Alternative Metal: {}
     Heavy Metal: {}
     Progressive Metal: {}
+    Sludge Metal: {}
   Pop:
     Alt-Pop: {}
     City Pop: {}
     Hyperpop: {}
     Indie Pop: {}
+    Soft Rock:
+      Yacht Rock: {}
   Psychedelia:
     Neo-Psychedelia:
       Hypnagogic Pop: {}
   Rock:
-    Alternative Rock: {}
+    Alternative Rock:
+      Shoegaze: {}
     Art Rock: {}
     Hard Rock: {}
     Indie Rock: {}
     Post-Punk: {}
     Progressive Rock: {}
     Psychedelic Rock: {}
+    'Rock & Roll': {}
   R&B:
     Funk: {}
+    Soul: {}
+  Singer-Songwriter: {}
 
-  # Fusion tree
+fusion-tree:
   Chillsynth: {}
   EDM:
     Breakbeat: {}
@@ -60,6 +68,9 @@ tree:
     Techno: {}
     Trance:
       Psytrance: {}
+  Future Funk: {}
+  Stoner Rock: {}
+  Synthpop: {}
 
 fusions:
   Chillsynth:
@@ -71,7 +82,13 @@ fusions:
   Future Funk:
     - House
     - Vapor
+  Stoner Rock:
+    - Hard Rock
+    - Psychedelia
+  Synthpop:
+    - Electronic
+    - Pop
 
 aliases:
-  "Drum & Bass": Drum and Bass
+  'Drum & Bass': Drum and Bass
   DnB: Drum and Bass
