@@ -1,10 +1,25 @@
 directory: /srv/files/Music/
 library: /home/alex/.local/share/musiclibrary.db
+
+plugins:
+  - musicbrainz
+#  - lastgenre
+  - genre_tree
+
+musicbrainz:
+  genres: yes
+
+#lastgenre:
+#  auto: yes
+#  force: yes
+#  source: track   # 'track' or 'album' - track gets more specific tags
+#  count: 5        # Fetch top 5 tags so your script has options to pick from
+#  whitelist: no   # Let your custom genre_tree plugin do the filtering instead
+
 import:
-    copy: no
-    move: no
+  copy: no
+  move: no
 
 pluginpath:
   - ~/.config/beets/beetsplug
 
-plugins: treegenre
