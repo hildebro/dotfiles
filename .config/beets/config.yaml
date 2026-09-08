@@ -3,3 +3,8 @@ library: /home/alex/.local/share/musiclibrary.db
 import:
     copy: no
     move: no
+
+pluginpath:
+  - ~/.config/beets/beetsplug
+
+plugins: treegenre
