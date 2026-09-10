@@ -4,6 +4,7 @@ import yaml
 from beets.plugins import BeetsPlugin
 from beets import config
 from beets.mediafile import MediaFile
+from beets.util import syspath
 
 # ANSI escape codes for coloring terminal output
 def _grey(text): return f"\033[90m{text}\033[0m"
@@ -91,21 +92,30 @@ class GenreTreePlugin(BeetsPlugin):
         return sorted(list(final_genres)), sorted(list(accepted)), sorted(list(added)), sorted(list(dropped))
 
     def _extract_raw_genres(self, mf, item, album=None):
-        """Safely extracts all genres, handling multi-value ID3v2.4 arrays correctly."""
+        """Safely extracts all genres, handling lists, strings, and multi-value ID3v2.4 arrays."""
         raw_genres = set()
         
-        # 1. Check the plural mf.genres (this returns the true list past the null bytes)
-        if hasattr(mf, 'genres') and mf.genres:
-            for g_item in mf.genres:
-                raw_genres.update([g.strip() for g in re.split(r'[;,/\x00]', g_item) if g.strip()])
-        elif mf.genre:
-            raw_genres.update([g.strip() for g in re.split(r'[;,/\x00]', mf.genre) if g.strip()])
+        def _add_genres(field_val):
+            if not field_val:
+                return
+            # Force into a list so we can process strings and lists identically
+            vals = field_val if isinstance(field_val, list) else [str(field_val)]
+            for v in vals:
+                # Safely split and strip each value
+                raw_genres.update([g.strip() for g in re.split(r'[;,/\x00]', str(v)) if g.strip()])
 
-        # 2. Backup check against the database items
-        if item.genre:
-            raw_genres.update([g.strip() for g in re.split(r'[;,/\x00]', item.genre) if g.strip()])
-        if album and album.genre:
-            raw_genres.update([g.strip() for g in re.split(r'[;,/\x00]', album.genre) if g.strip()])
+        # 1. Check the physical file
+        if mf:
+            if hasattr(mf, 'genres') and mf.genres:
+                _add_genres(mf.genres)
+            elif getattr(mf, 'genre', None):
+                _add_genres(mf.genre)
+
+        # 2. Check the database items
+        if item and getattr(item, 'genre', None):
+            _add_genres(item.genre)
+        if album and getattr(album, 'genre', None):
+            _add_genres(album.genre)
 
         return raw_genres
 
@@ -115,18 +125,25 @@ class GenreTreePlugin(BeetsPlugin):
             items = list(album.items())
             
             for item in items:
+                mf = None
                 try:
-                    mf = MediaFile(item.path)
+                    # Safely convert the bytes path for the OS
+                    mf = MediaFile(syspath(item.path))
+                except Exception as e:
+                    print(f"  [_grey('Warning: Could not read file for genre extraction:')] {e}")
+
+                try:
+                    # Extract genres even if mf failed (so it checks the DB fallback)
                     raw_genres.update(self._extract_raw_genres(mf, item, album))
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"  [_grey('Warning: Error extracting genres:')] {e}")
 
             artist = getattr(album, 'albumartist', 'Unknown Artist')
             title = getattr(album, 'album', 'Unknown Album')
 
             if not raw_genres:
                 print(f"\n[GenreTree] 💿 {_bold(artist + ' - ' + title)}", flush=True)
-                print(f"  {_grey('No genre data found on physical files.')}\n", flush=True)
+                print(f"  {_grey('No genre data found on physical files or database.')}\n", flush=True)
                 return
 
             final, acc, add, drp = self.process_genres_categorized(raw_genres)
@@ -138,6 +155,7 @@ class GenreTreePlugin(BeetsPlugin):
             if add: print(f"  Parents:  {', '.join([_blue(g) for g in add])}", flush=True)
             print(f"  Final:    {new_genre_str if new_genre_str else _grey('(none)')}\n", flush=True)
 
+            # Update the database
             album.genre = new_genre_str
             album.store()
 
@@ -145,27 +163,35 @@ class GenreTreePlugin(BeetsPlugin):
                 item.genre = new_genre_str
                 item.store()
                 try:
-                    mf = MediaFile(item.path)
-                    # Assign the actual Python LIST so mutagen writes proper multi-value ID3v2.4 tags for Plex
-                    mf.genres = final
+                    mf = MediaFile(syspath(item.path))
+                    mf.genre = new_genre_str
                     mf.save()
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"  [_grey('Warning: Failed to save genre to file:')] {e}")
 
         except Exception as e:
             print(f"[GenreTree] ERROR in on_album_imported: {e}", flush=True)
 
     def on_item_imported(self, lib, item, **kwargs):
+        # Skip items that are part of an album import to avoid double-processing
         if item.get_album():
             return
             
         try:
             raw_genres = set()
+            mf = None
+
             try:
-                mf = MediaFile(item.path)
+                # Safely convert the bytes path for the OS
+                mf = MediaFile(syspath(item.path))
+            except Exception as e:
+                print(f"  [_grey('Warning: Could not read file for genre extraction:')] {e}")
+
+            try:
+                # Extract genres even if mf failed (so it checks the DB fallback)
                 raw_genres.update(self._extract_raw_genres(mf, item))
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"  [_grey('Warning: Error extracting genres:')] {e}")
 
             artist = getattr(item, 'artist', 'Unknown Artist')
             title = getattr(item, 'title', 'Unknown Title')
@@ -184,14 +210,17 @@ class GenreTreePlugin(BeetsPlugin):
             if add: print(f"  Parents:  {', '.join([_blue(g) for g in add])}", flush=True)
             print(f"  Final:    {new_genre_str if new_genre_str else _grey('(none)')}\n", flush=True)
 
+            # Update the database
             item.genre = new_genre_str
             item.store()
+
             try:
-                mf = MediaFile(item.path)
-                mf.genres = final
+                if not mf:
+                    mf = MediaFile(syspath(item.path))
+                mf.genre = new_genre_str
                 mf.save()
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"  [_grey('Warning: Failed to save genre to file:')] {e}")
 
         except Exception as e:
             print(f"[GenreTree] ERROR in on_item_imported: {e}", flush=True)
