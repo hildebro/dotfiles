@@ -2,24 +2,32 @@ tree:
   Ambient: {}
   Blues: {}
   Dance:
+    Alternative Dance: {}
     Disco: {}
   Electronic:
     Bit Music:
       Chiptune: {}
     Chillout:
       Downtempo: {}
+    Digital Fusion: {}
     Drum and Bass:
       Jungle: {}
       Liquid: {}
     Glitch Hop: {}
     House:
+      Acid House: {}
       Deep House: {}
       French House: {}
+      Progressive House: {}
+      Tech House: {}
+    IDM: {}
     Indietronica:
       Chillwave: {}
       Glitch Pop: {}
+    Progressive Electronic: {}
     Synthwave:
       Darksynth: {}
+      Dreamwave: {}
     Vapor:
       Utopian Virtual: {}
       Vaportrap: {}
@@ -29,19 +37,24 @@ tree:
   Hip Hop:
     Abstract Hip Hop: {}
     Instrumental Hip Hop: {}
-  Jazz: {}
+    Trap: {}
+  Industrial:
+    Post-Industrial: {}
+  Jazz:
+    Smooth Jazz: {}
   Metal:
     Alternative Metal: {}
+    Avant-Garde Metal: {}
     Heavy Metal: {}
     Progressive Metal: {}
     Sludge Metal: {}
   Pop:
     Alt-Pop: {}
+    Art Pop: {}
     City Pop: {}
     Hyperpop: {}
     Indie Pop: {}
-    Soft Rock:
-      Yacht Rock: {}
+    Progressive Pop: {}
   Psychedelia:
     Neo-Psychedelia:
       Hypnagogic Pop: {}
@@ -49,12 +62,20 @@ tree:
     Alternative Rock:
       Shoegaze: {}
     Art Rock: {}
+    Funk Rock: {}
     Hard Rock: {}
     Indie Rock: {}
-    Post-Punk: {}
+    New Wave: {}
+    Post-Punk:
+      Dance-Punk: {}
+      Gothic: {}
+    Pop Rock:
+      Soft Rock:
+        Yacht Rock: {}
     Progressive Rock: {}
     Psychedelic Rock: {}
     'Rock & Roll': {}
+    Punk: {}
   R&B:
     Funk: {}
     Soul: {}
@@ -62,13 +83,24 @@ tree:
 
 fusion-tree:
   Chillsynth: {}
+  Dance-Punk Revival: {}
+  EBM: {}
   EDM:
-    Breakbeat: {}
+    Breakbeat:
+      Acid Breaks: {}
+      Big Beat: {}
+    Electroclash: {}
     Footwork: {}
-    Techno: {}
+    Grime: {}
+    Techno:
+      Acid Techno: {}
     Trance:
+      Acid Trance: {}
       Psytrance: {}
+  Funk Metal: {}
   Future Funk: {}
+  Industrial Rock: {}
+  Post-Punk Revival: {}
   Stoner Rock: {}
   Synthpop: {}
 
@@ -76,12 +108,27 @@ fusions:
   Chillsynth:
     - Synthwave
     - Chillwave
+  Dance-Punk Revival:
+    - Dance-Punk
+    - Post-Punk Revival
+  EBM:
+    - EDM
+    - Post-Industrial
   EDM:
     - Electronic
     - Dance
+  Funk Metal:
+    - Alternative Metal
+    - Funk Rock
   Future Funk:
     - House
     - Vapor
+  Industrial Rock:
+    - Rock
+    - Post-Industrial
+  Post-Punk Revival:
+    - Indie Rock
+    - Post-Punk
   Stoner Rock:
     - Hard Rock
     - Psychedelia
@@ -90,5 +137,7 @@ fusions:
     - Pop
 
 aliases:
+  Breaks: Breakbeat
   'Drum & Bass': Drum and Bass
   DnB: Drum and Bass
+  Synth-pop: Synthpop
