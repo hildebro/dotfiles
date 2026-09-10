@@ -107,6 +107,7 @@
 .klei
 .local/bin/work
 .local/bin/stripe
+.local/bin/yt-dlp
 .local/share
 .local/src
 .local/state
