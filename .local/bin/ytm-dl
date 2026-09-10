@@ -6,7 +6,6 @@
 set -e
 
 # --- Configuration ---
-YTDLP_VENV_DIR="$HOME/development/ytdlp-venv"
 SSH_TARGET="webserver"
 REMOTE_MUSIC_DIR="/srv/files/Music"
 
@@ -18,16 +17,20 @@ fi
 
 echo "--- Starting download and transfer process ---"
 
-echo "1. Changing to virtual environment directory and activating..."
-cd "$YTDLP_VENV_DIR"
-source bin/activate
+echo "1. Creating and moving to temporary directory..."
+# Create a secure temporary directory in /tmp
+TEMP_DIR=$(mktemp -d /tmp/ytdlp-music.XXXXXX)
+cd "$TEMP_DIR"
+
+# Ensure the temp directory is cleaned up if the script exits unexpectedly
+trap 'rm -rf "$TEMP_DIR"' ERR INT TERM
 
 echo "2. Getting expected track count..."
 EXPECTED_COUNT=$(yt-dlp --quiet --no-warnings --flat-playlist --print id "$1" | wc -l)
 
 if ! [[ "$EXPECTED_COUNT" =~ ^[0-9]+$ ]] || [ "$EXPECTED_COUNT" -eq 0 ]; then
     echo "Error: Could not determine a valid track count from the URL. Exiting."
-    deactivate
+    rm -rf "$TEMP_DIR"
     exit 1
 fi
 echo "    - Expected song count: $EXPECTED_COUNT"
@@ -64,6 +67,12 @@ echo "    - Successfully downloaded $DOWNLOADED_COUNT song(s)."
 echo "4. Extracting and verifying metadata..."
 MP3_FILE=$(find . -maxdepth 1 -name "*.mp3" -print -quit)
 
+if [ -z "$MP3_FILE" ]; then
+    echo "Error: No mp3 files found to process. Exiting."
+    rm -rf "$TEMP_DIR"
+    exit 1
+fi
+
 METADATA_JSON=$(ffprobe -v quiet -print_format json -show_format -show_streams "$MP3_FILE")
 ARTIST=$(echo "$METADATA_JSON" | grep -oP '"artist": "\K[^"]*')
 ALBUM=$(echo "$METADATA_JSON" | grep -oP '"album": "\K[^"]*')
@@ -96,9 +105,9 @@ ssh "$SSH_TARGET" "mkdir -p \"$REMOTE_DIR\""
 echo "7. Transferring files to $SSH_TARGET:$REMOTE_DIR..."
 scp *.mp3 "$SSH_TARGET:$REMOTE_DIR/"
 
-echo "8. Deactivating virtual environment and removing local mp3 files..."
-deactivate
-rm -v *.mp3
+echo "8. Cleaning up local temporary files..."
+cd /tmp
+rm -rf "$TEMP_DIR"
 
 echo "9. Importing into Beets on remote server..."
 ssh -t "$SSH_TARGET" "cd \"$REMOTE_DIR\" && beet import ./"
