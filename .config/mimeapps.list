@@ -1,0 +1,17 @@
+
+[Default Applications]
+x-scheme-handler/sgnl=signal.desktop
+x-scheme-handler/signalcaptcha=signal.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+image/jpeg=pqiv.desktop
+image/png=pqiv.desktop
+image/webp=pqiv.desktop
+image/gif=pqiv.desktop
+image/svg+xml=pqiv.desktop
+video/mp4=pqiv.desktop
+video/x-ms-wmv=pqiv.desktop
+video/webm=pqiv.desktop
+video/x-matroska=pqiv.desktop

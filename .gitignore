@@ -48,7 +48,6 @@
 .config/menus
 .config/Microsoft
 .config/microsoft-edge-dev
-.config/mimeapps.list
 .config/.mono
 .config/mono.addins
 .config/mpd/*
