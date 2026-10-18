@@ -216,7 +216,7 @@ hl.config({
         kb_layout  = "eu",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "",
+        kb_options = "caps:escape",
         kb_rules   = "",
 
         repeat_delay = 300,
@@ -226,7 +226,7 @@ hl.config({
         mouse_refocus = 0, -- Needed for Intellij `Find in Files`
         accel_profile = "flat",
 
-        sensitivity = -0.5, -- -1.0 - 1.0, 0 means no modification.
+        sensitivity = 0.0, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
             natural_scroll = false,
@@ -258,6 +258,12 @@ hl.device({
 hl.device({
     name        = "usb-optical-mouse",
     sensitivity = -0.2,
+    accel_profile = "flat"
+})
+
+hl.device({
+    name        = "logitech-pro-x-1",
+    sensitivity = -0.3,
     accel_profile = "flat"
 })
 
