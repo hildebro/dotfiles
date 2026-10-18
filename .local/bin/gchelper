@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Gamescope wrapper for 1440p, 170Hz, HDR
+
+# --- Configuration ---
+RES_W=2560
+RES_H=1440
+REFRESH=170
+
+# --- Environment Variables for HDR ---
+export DXVK_HDR=1
+export ENABLE_HDR_WSI=1
+
+# --- Launch Gamescope ---
+# "$@" takes whatever game command is passed to the script and runs it inside Gamescope
+exec gamescope -W "${RES_W}" -H "${RES_H}" -r "${REFRESH}" --hdr-enabled -f -- "$@"
