@@ -216,7 +216,7 @@ hl.config({
         kb_layout  = "eu",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "caps:escape",
+        kb_options = "",
         kb_rules   = "",
 
         repeat_delay = 300,
@@ -261,11 +261,25 @@ hl.device({
     accel_profile = "flat"
 })
 
-hl.device({
-    name        = "logitech-pro-x-1",
-    sensitivity = -0.3,
-    accel_profile = "flat"
-})
+-- plugging in and out keeps spawning new names.
+-- these names should be enough for most cases.
+local mice = {
+    "logitech-pro-x",
+    "logitech-pro-x-1",
+    "logitech-pro-x-wireless",
+    "logitech-pro-x-wireless-1",
+    "logitech-pro-x-wireless-2",
+    "logitech-pro-x-wireless-3",
+    "logitech-pro-x-wireless-4",
+}
+
+for _, name in ipairs(mice) do
+    hl.device({
+        name          = name,
+        sensitivity   = -0.3,
+        accel_profile = "flat",
+    })
+end
 
 --
 
