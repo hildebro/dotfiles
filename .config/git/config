@@ -46,3 +46,5 @@
 	name = Alexander Hildebrandt
 	signingkey = D9ABAE8B4FDA0A4A
 
+[alias]
+	rum = "!f() { cur=$(git branch --show-current); if [ \"$cur\" = \"main\" ]; then git pull --ff-only origin main; else git fetch origin main:main && git rebase main; fi; }; f"
