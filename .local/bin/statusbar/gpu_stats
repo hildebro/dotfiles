@@ -50,6 +50,7 @@ find_pci_gpu() {
     for dev in /sys/bus/pci/devices/*; do
         [[ "$(cat "$dev/class")" == 0x03* && "$(cat "$dev/vendor")" == "$vendor" ]] && { echo "$dev"; return; }
     done
+    return 0   # not found is not an error (set -e): e.g. dGPU disabled in the BIOS
 }
 
 get_nvidia_stats() {
