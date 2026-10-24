@@ -44,61 +44,82 @@ get_amd_stats() {
     echo "${temp:-??} $(format_usage "${usage:-0}")"
 }
 
+find_pci_gpu() {
+    # Prints the sysfs path of the first display controller with the given PCI vendor id
+    local vendor=$1 dev
+    for dev in /sys/bus/pci/devices/*; do
+        [[ "$(cat "$dev/class")" == 0x03* && "$(cat "$dev/vendor")" == "$vendor" ]] && { echo "$dev"; return; }
+    done
+}
+
 get_nvidia_stats() {
+    local dev=$1
     local temp=""
     local usage=""
-    
-    # We already confirmed the driver is active in the main logic
-    local output=$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu --format=csv,noheader,nounits)
-    temp=$(echo "$output" | cut -d ',' -f1)
-    usage=$(echo "$output" | cut -d ',' -f2)
 
-    echo "${temp:-??} $(format_usage "${usage:-0}")"
+    # Never wake the dGPU just to read it: nvidia-smi powers it up, and polling every few
+    # seconds keeps it from ever suspending (extra heat and battery drain on a hybrid laptop).
+    if [[ "$(cat "$dev/power/runtime_status" 2>/dev/null)" != "active" ]]; then
+        echo "off"
+        return
+    fi
+    # Awake but no program holds the device open -> it will suspend on its own, leave it alone
+    if [[ -z "$(find /proc/[0-9]*/fd -lname '/dev/nvidia[0-9]*' -print -quit 2>/dev/null)" ]]; then
+        echo "idle"
+        return
+    fi
+
+    local output=$(nvidia-smi --query-gpu=temperature.gpu,utilization.gpu --format=csv,noheader,nounits)
+    temp=$(echo "$output" | cut -d ',' -f1 | tr -d ' ')
+    usage=$(echo "$output" | cut -d ',' -f2 | tr -d ' ')
+
+    echo "${temp:-??}°C $(format_usage "${usage:-0}")"
 }
 
 get_intel_stats() {
+    local dev=$1
     local temp=""
     local usage=""
 
     # 1. Get Temperature
-    # Tries to find a Package temp, which is usually accurate for the iGPU die.
+    # The iGPU sits on the CPU die, so the package temperature is the best available reading.
     temp=$(sensors 2> /dev/null | awk '/Package id 0/ {print $4}' | tr -d '+°C' | cut -d. -f1 | head -n1)
 
-    if command -v intel_gpu_top &> /dev/null; then
-        # We only take one line of output, then head automatically quits the top-process
-        # By setting -s 1 we ensure the top command executes very quickly.
-        usage=$(timeout -s SIGINT 0.5s /usr/bin/intel_gpu_top -l -s 500 | head -n 3 | tail -n 1 | awk '{print $7}')
+    # 2. Get Usage without root (intel_gpu_top needs CAP_PERFMON):
+    # busy = 1 - (time spent in the RC6 sleep state / wall time) since the previous run
+    local drm rc6="" state="${XDG_RUNTIME_DIR:-/tmp}/gpu_stats.intel"
+    for drm in "$dev"/drm/card*; do
+        [[ -f "$drm/gt/gt0/rc6_residency_ms" ]] && rc6=$(cat "$drm/gt/gt0/rc6_residency_ms") && break
+        [[ -f "$drm/power/rc6_residency_ms" ]] && rc6=$(cat "$drm/power/rc6_residency_ms") && break
+    done
+    if [[ -n "$rc6" ]]; then
+        local now=$(( $(date +%s%N) / 1000000 )) prev_rc6 prev_now
+        if read -r prev_rc6 prev_now 2>/dev/null < "$state" && (( now > prev_now )); then
+            usage=$(( 100 - 100 * (rc6 - prev_rc6) / (now - prev_now) ))
+            (( usage < 0 )) && usage=0
+        fi
+        echo "$rc6 $now" > "$state"
     fi
-    
-    echo "${temp:-??} $(format_usage "${usage:-0}")"
+
+    echo "${temp:-??}°C $(format_usage "${usage:-0}")"
 }
 
 # --- Main Logic ---
 
-# 1. Check for AMD
-# We look for the kernel module text file specifically
+# 1. AMD desktop: single GPU
 if lsmod | grep -q "^amdgpu"; then
     read temp usage <<< "$(get_amd_stats)"
-
-# 2. Check for NVIDIA (The fix for your specific issue)
-# Even if nvidia-smi is installed, /proc/driver/nvidia only exists if the module is loaded and active.
-# If you are in "hybrid" mode and the card is off (bbswitch/prime), this directory usually vanishes or is empty.
-elif [[ -d "/proc/driver/nvidia" ]] && command -v nvidia-smi &> /dev/null; then
-    # Double check: sometimes the folder exists but the GPU is in deep sleep.
-    # We run a quick check to ensure smi doesn't error out.
-    if nvidia-smi -L &> /dev/null; then
-        read temp usage <<< "$(get_nvidia_stats)"
-    else
-        # Nvidia present but sleeping/erroring -> Fallback to Intel
-        read temp usage <<< "$(get_intel_stats)"
-    fi
-
-# 3. Fallback to Intel
-# This catches cases where:
-# a) No AMD/Nvidia hardware exists
-# b) Nvidia hardware exists but is powered off (the hybrid case)
-else
-    read temp usage <<< "$(get_intel_stats)"
+    echo " ${temp}°C $usage"
+    exit 0
 fi
 
-echo " ${temp}°C $usage"
+# 2. Intel iGPU and/or NVIDIA dGPU (hybrid laptop): show every GPU that exists
+intel_dev=$(find_pci_gpu 0x8086)
+nvidia_dev=$(find_pci_gpu 0x10de)
+out=""
+[[ -n "$intel_dev" ]] && out+="i $(get_intel_stats "$intel_dev")"
+if [[ -n "$nvidia_dev" ]] && command -v nvidia-smi &> /dev/null; then
+    out+="${out:+  }n $(get_nvidia_stats "$nvidia_dev")"
+fi
+
+echo " ${out:-??}"
