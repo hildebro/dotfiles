@@ -12,6 +12,8 @@
 .config/capacitor
 .config/cef_user_data/*
 .config/chromium
+.config/claude
+.config/Claude
 .config/cmus
 .config/composer
 .config/configstore
@@ -28,9 +30,11 @@
 .config/filezilla
 .config/gcloud
 .config/GIMP
+.config/ghidra
 .config/godot
 .config/Google
 .config/google-chrome*
+.config/gthumb
 .config/gtk-*
 .config/gzdoom
 .config/hetznerbot.toml
@@ -73,6 +77,7 @@
 .config/sunshine
 .config/sxiv
 .config/syncthing
+.config/systemd/user/sockets.target.wants/podman.socket
 .config/Ticket\ to\ Ride
 .config/ts3client
 .config/tuxclocker.conf
@@ -104,6 +109,7 @@
 .gnupg
 .java
 .klei
+.local/bin/claude
 .local/bin/work
 .local/bin/stripe
 .local/bin/yt-dlp
