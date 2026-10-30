@@ -428,6 +428,14 @@ hl.window_rule({
     workspace = "7 silent",
 })
 
+-- Wine windows use the exe name as their class (e.g. explorer.exe for virtual desktops), Proton uses steam_app_<id>
+hl.window_rule({
+    name  = "float-wine",
+    match = { class = "(?i)^(.*\\.exe|steam_app_.*)$" },
+    float = true,
+    center = true,
+})
+
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({
 --     name  = "no-anim-overlay",
