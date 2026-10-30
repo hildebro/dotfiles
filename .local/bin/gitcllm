@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# git-diff-copy: copy a commit's diff to the Wayland clipboard, wrapped for LLMs.
+# Usage: git-diff-copy <rev>    (requires: wl-clipboard)
+set -euo pipefail
+
+rev="${1:?usage: $(basename "$0") <rev>}"
+command -v wl-copy >/dev/null || { echo "wl-copy not found: sudo pacman -S wl-clipboard" >&2; exit 1; }
+git rev-parse --verify --quiet "$rev^{commit}" >/dev/null || { echo "not a commit: $rev" >&2; exit 1; }
+
+out=$(
+  echo "<commit>"
+  git show -s --format='hash: %H%nauthor: %an <%ae>%ndate: %ad%n%nmessage:%n%B' "$rev"
+  echo "</commit>"
+  echo
+  echo "<files_changed>"
+  git show --stat=200 --format= -M --diff-merges=first-parent "$rev"
+  echo "</files_changed>"
+  echo
+  echo "<diff>"
+  git show --format= --no-color --no-ext-diff -M -U5 --diff-merges=first-parent "$rev"
+  echo "</diff>"
+)
+
+printf '%s\n' "$out" | wl-copy
+echo "Copied $(git rev-parse --short "$rev") ($(printf '%s' "$out" | wc -l) lines) to clipboard."
