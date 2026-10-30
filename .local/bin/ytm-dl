@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# A script to download audio via yt-dlp, embed metadata and move it to a web server.
+# Download audio via yt-dlp (YouTube, Bandcamp, ...), embed metadata and move it to a web server.
 
-# Exit immediately if a command exits with a non-zero status.
 set -e
 
 # --- Configuration ---
@@ -11,22 +10,41 @@ REMOTE_MUSIC_DIR="/srv/files/Music"
 
 # --- Main Script ---
 if [ -z "$1" ]; then
-    echo "Usage: $0 <youtube_url_or_playlist>"
+    echo "Usage: $0 <youtube_or_bandcamp_url>"
     exit 1
 fi
+URL="$1"
 
-echo "--- Starting download and transfer process ---"
+# --- Site-specific yt-dlp arguments ---
+if [[ "$URL" =~ bandcamp\.com ]]; then
+    SITE="Bandcamp"
+    # Source is already MP3: keep it as-is (no re-encode), embed cover art,
+    # and use Bandcamp's real track numbers.
+    YTDLP_ARGS=(-x --audio-format mp3 --embed-metadata --embed-thumbnail)
+    OUT_TEMPLATE="%(track_number|)02d %(artist,uploader).30s - %(title)s.%(ext)s"
+else
+    SITE="YouTube/other"
+    YTDLP_ARGS=(-x --audio-format mp3 --audio-quality 0 --embed-metadata)
+    OUT_TEMPLATE="%(playlist_index|)s %(artist,uploader).30s - %(title)s.%(ext)s"
+fi
+
+download() {
+    yt-dlp "${YTDLP_ARGS[@]}" --trim-filenames 200 -o "$OUT_TEMPLATE" "$URL"
+}
+
+count_mp3() {
+    find . -maxdepth 1 -name "*.mp3" | wc -l
+}
+
+echo "--- Starting download and transfer process ($SITE) ---"
 
 echo "1. Creating and moving to temporary directory..."
-# Create a secure temporary directory in /tmp
 TEMP_DIR=$(mktemp -d /tmp/ytdlp-music.XXXXXX)
 cd "$TEMP_DIR"
-
-# Ensure the temp directory is cleaned up if the script exits unexpectedly
 trap 'rm -rf "$TEMP_DIR"' ERR INT TERM
 
 echo "2. Getting expected track count..."
-EXPECTED_COUNT=$(yt-dlp --quiet --no-warnings --flat-playlist --print id "$1" | wc -l)
+EXPECTED_COUNT=$(yt-dlp --quiet --no-warnings --flat-playlist --print id "$URL" | wc -l)
 
 if ! [[ "$EXPECTED_COUNT" =~ ^[0-9]+$ ]] || [ "$EXPECTED_COUNT" -eq 0 ]; then
     echo "Error: Could not determine a valid track count from the URL. Exiting."
@@ -36,19 +54,15 @@ fi
 echo "    - Expected song count: $EXPECTED_COUNT"
 
 echo "3. Downloading songs..."
-yt-dlp -x --audio-format mp3 --audio-quality 0 --embed-metadata \
-    --trim-filenames 200 \
-    -o "%(playlist_index|)s %(artist,uploader).30s - %(title)s.%(ext)s" "$1"
-
-DOWNLOADED_COUNT=$(ls -1 -- *.mp3 2>/dev/null | wc -l || echo 0)
+# Don't let a single failed track abort the script; the retry loop handles it.
+download || true
+DOWNLOADED_COUNT=$(count_mp3)
 
 while [ "$DOWNLOADED_COUNT" -lt "$EXPECTED_COUNT" ]; do
     echo "Warning: Download was incomplete ($DOWNLOADED_COUNT/$EXPECTED_COUNT downloaded)."
     read -p "Would you like to retry the missing downloads? (Y/n): " RETRY_ANS
-    
-    # Default to Yes if user just presses Enter
     RETRY_ANS=${RETRY_ANS:-Y}
-    
+
     case "$RETRY_ANS" in
         [nN]*)
             echo "Skipping retries. Proceeding with $DOWNLOADED_COUNT songs..."
@@ -56,8 +70,8 @@ while [ "$DOWNLOADED_COUNT" -lt "$EXPECTED_COUNT" ]; do
             ;;
         *)
             echo "Retrying missing songs..."
-            yt-dlp -x --audio-format mp3 --audio-quality 0 --embed-metadata -o "%(playlist_index|)s %(artist,uploader)s - %(title)s.%(ext)s" "$1"
-            DOWNLOADED_COUNT=$(ls -1 -- *.mp3 2>/dev/null | wc -l || echo 0)
+            download || true
+            DOWNLOADED_COUNT=$(count_mp3)
             ;;
     esac
 done
@@ -73,43 +87,41 @@ if [ -z "$MP3_FILE" ]; then
     exit 1
 fi
 
-METADATA_JSON=$(ffprobe -v quiet -print_format json -show_format -show_streams "$MP3_FILE")
-ARTIST=$(echo "$METADATA_JSON" | grep -oP '"artist": "\K[^"]*')
-ALBUM=$(echo "$METADATA_JSON" | grep -oP '"album": "\K[^"]*')
+ARTIST=$(ffprobe -v quiet -show_entries format_tags=artist -of default=nw=1:nk=1 "$MP3_FILE")
+ALBUM=$(ffprobe -v quiet -show_entries format_tags=album -of default=nw=1:nk=1 "$MP3_FILE")
 
 if [ -z "$ARTIST" ]; then
-    ARTIST=$(yt-dlp --print "%(artist,uploader|Unknown Artist)s" --no-download "$1" | head -n 1)
+    ARTIST=$(yt-dlp --print "%(artist,uploader|Unknown Artist)s" --no-download "$URL" | head -n 1)
 fi
 if [ -z "$ALBUM" ]; then
-    ALBUM=$(yt-dlp --print "%(album,playlist|Unknown Album)s" --no-download "$1" | head -n 1)
+    ALBUM=$(yt-dlp --print "%(album,playlist|Unknown Album)s" --no-download "$URL" | head -n 1)
 fi
 
 # --- Interactive Album Artist Prompt ---
 echo ""
 echo "Album: $ALBUM"
 echo "Please confirm or adjust the detected album artist:"
-# 'read -e -i' pre-fills the prompt with $ARTIST so you can edit it before hitting Enter
 read -e -i "$ARTIST" -p "> " ALBUM_ARTIST
 echo ""
 
 echo "5. Writing Album Artist tags to files..."
 for file in *.mp3; do
-    # TPE2 is the specific ID3v2 frame for "Album Artist"
     id3v2 --TPE2 "$ALBUM_ARTIST" "$file"
 done
 
 echo "6. Checking for remote directory and creating if it doesn't exist..."
-REMOTE_DIR="${REMOTE_MUSIC_DIR}/$(echo "$ALBUM_ARTIST" | sed "s/'/\\\'/g")/$(echo "$ALBUM" | sed "s/'/\\\'/g")"
-ssh "$SSH_TARGET" "mkdir -p \"$REMOTE_DIR\""
+REMOTE_DIR="${REMOTE_MUSIC_DIR}/${ALBUM_ARTIST//\//-}/${ALBUM//\//-}"
+REMOTE_DIR_Q=$(printf '%q' "$REMOTE_DIR")
+ssh "$SSH_TARGET" "mkdir -p $REMOTE_DIR_Q"
 
 echo "7. Transferring files to $SSH_TARGET:$REMOTE_DIR..."
-scp *.mp3 "$SSH_TARGET:$REMOTE_DIR/"
+scp ./*.mp3 "$SSH_TARGET:$REMOTE_DIR/"
 
 echo "8. Cleaning up local temporary files..."
 cd /tmp
 rm -rf "$TEMP_DIR"
 
 echo "9. Importing into Beets on remote server..."
-ssh -t "$SSH_TARGET" "cd \"$REMOTE_DIR\" && beet import ./"
+ssh -t "$SSH_TARGET" "cd $REMOTE_DIR_Q && beet import ./"
 
 echo "--- Process complete! ---"
