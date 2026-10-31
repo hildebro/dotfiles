@@ -38,7 +38,9 @@
 .config/gtk-*
 .config/gzdoom
 .config/hetznerbot.toml
+.config/hypr/monitors.conf
 .config/hypr/monitors.lua
+.config/hypr/workspaces.conf
 .config/hypr/workspaces.lua
 .config/java
 .config/Jackbox\ Games

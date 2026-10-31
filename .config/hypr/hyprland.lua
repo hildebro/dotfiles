@@ -13,24 +13,22 @@ require("workspaces")
 ---- MY PROGRAMS ----
 ---------------------
 
-local terminal    = "alacritty"
-local fileManager = "nemo"
-local menu        = "sh -c '$(tofi-run)'"
+local terminal    = "uwsm app -- alacritty"
+local fileManager = "uwsm app -- nemo"
+local menu        = "sh -c 'uwsm app -- $(tofi-run)'"
 
 -------------------
 ---- AUTOSTART ----
 -------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Autostart/
-hl.on("hyprland.start", function () 
+hl.on("hyprland.start", function ()
 --  hl.exec_cmd("hypridle")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
-  hl.exec_cmd("waybar")
-  hl.exec_cmd("swaybg -i $XDG_CACHE_HOME/wall.jpg")
-  hl.exec_cmd("uwsm app -- blueman-applet")
-  hl.exec_cmd("autostart")
+  hl.exec_cmd("uwsm app -- waybar")
+  hl.exec_cmd("uwsm app -- swaybg -i $XDG_CACHE_HOME/wall.jpg")
+  hl.exec_cmd("uwsm app -- dunst")
 end)
-
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
