@@ -13,6 +13,7 @@
 .config/cef_user_data/*
 .config/chromium
 .config/claude
+!.config/claude/settings.json
 .config/Claude
 .config/cmus
 .config/composer

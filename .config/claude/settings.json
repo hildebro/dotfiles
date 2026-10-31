@@ -4,6 +4,28 @@
     "pr": ""
   },
   "model": "opus",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify-send 'Claude Code' 'Finished'"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify-send 'Claude Code' 'Needs your input'"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "$CLAUDE_CONFIG_DIR/usage_statusline.sh"
@@ -13,21 +35,5 @@
       "effortLevel": "medium"
     }
   },
-  "theme": "dark-ansi",
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          { "type": "command", "command": "notify-send 'Claude Code' 'Finished'" }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "hooks": [
-          { "type": "command", "command": "notify-send 'Claude Code' 'Needs your input'" }
-        ]
-      }
-    ]
-  }  
+  "theme": "dark-ansi"
 }
