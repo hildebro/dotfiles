@@ -116,6 +116,7 @@
 .local/bin/work
 .local/bin/stripe
 .local/bin/yt-dlp
+.local/Documents
 .local/share
 .local/src
 .local/state
