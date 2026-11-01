@@ -25,7 +25,7 @@ local menu        = "sh -c 'uwsm app -- $(tofi-run)'"
 hl.on("hyprland.start", function ()
 --  hl.exec_cmd("hypridle")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
-  hl.exec_cmd("uwsm app -- waybar")
+  hl.exec_cmd("uwsm app -- waybar-dark")
   hl.exec_cmd("uwsm app -- swaybg -i $XDG_CACHE_HOME/wall.jpg")
   hl.exec_cmd("uwsm app -- dunst")
 end)

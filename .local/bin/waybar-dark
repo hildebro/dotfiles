@@ -1,0 +1,3 @@
+#!/bin/sh
+# waybar with a dark icon theme so tray icons show on the black bar
+GSETTINGS_BACKEND=keyfile XDG_CONFIG_HOME="$HOME/.config/waybar-gtk" exec waybar -c "$HOME/.config/waybar/config" -s "$HOME/.config/waybar/style.css" "$@"
