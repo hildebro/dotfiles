@@ -155,6 +155,35 @@ google_ads_php.ini
 .config/sunshine
 .config/syncthing
 .config/VirtualBox
+.config/waybar-gtk
+
+# kde, regenerated on launch
+.config/akonadi*
+.config/baloofilerc
+.config/bluedevilglobalrc
+.config/emaildefaults
+.config/emailidentities
+.config/kaccessrc
+.config/kactivitymanagerd*
+.config/kalarmrc
+.config/kconf_updaterc
+.config/kdeconnect
+.config/kded*
+.config/kdeglobals
+.config/kglobalshortcutsrc
+.config/ksmserverrc
+.config/ktimezonedrc
+.config/kwalletrc
+.config/kwinoutputconfig.json
+.config/kwinrc
+.config/libaccounts-glib
+.config/plasma*
+.config/PlasmaUserFeedback
+.config/powermanagementprofilesrc
+.config/session
+.config/specialmailcollectionsrc
+.config/systemmonitorrc
+.gtkrc-2.0
 
 # binaries not maintained here
 .local/bin/claude
@@ -170,6 +199,7 @@ google_ads_php.ini
 .local/src
 .local/state
 .screenshots
+.var
 development
 Downloads
 music
