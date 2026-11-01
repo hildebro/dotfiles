@@ -81,6 +81,7 @@
 .config/sxiv
 .config/syncthing
 .config/systemd/user/sockets.target.wants/podman.socket
+.config/teeworlds/serverconfig.cfg
 .config/Ticket\ to\ Ride
 .config/ts3client
 .config/tuxclocker.conf
