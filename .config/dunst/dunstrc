@@ -48,7 +48,7 @@
     stack_duplicates = true
     hide_duplicate_count = true
     show_indicators = yes
-    icon_position = left
+    icon_position = off
     max_icon_size = 40
     #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:/usr/share/icons/Adwaita/256x256/status/
     sticky_history = yes

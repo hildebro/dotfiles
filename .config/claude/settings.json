@@ -10,7 +10,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify-send 'Claude Code' 'Finished'"
+            "command": "(timeout 5 notify-send 'Claude Code' 'Finished' >/dev/null 2>&1 &)",
+            "timeout": 10
           }
         ]
       }
@@ -20,7 +21,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "notify-send 'Claude Code' 'Needs your input'"
+            "command": "(timeout 5 notify-send 'Claude Code' 'Needs your input' >/dev/null 2>&1 &)",
+            "timeout": 10
           }
         ]
       }
