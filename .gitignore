@@ -3,6 +3,7 @@
 # secrets and credentials
 .config/1Password/*
 .config/aws
+.config/android
 .config/docker
 .config/gcloud
 .config/hetznerbot.toml
@@ -58,6 +59,7 @@
 .config/google-chrome*
 .config/Microsoft
 .config/microsoft-edge-dev
+.config/mozilla
 .config/vivaldi*
 .mozilla
 
@@ -66,9 +68,9 @@
 .config/Mumble
 .config/Signal
 .config/Slack
+.config/thunderbird
 .config/ts3client
 .config/WebCord
-.thunderbird
 .twinkle
 
 # media and creative
