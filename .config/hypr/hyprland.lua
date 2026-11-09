@@ -301,6 +301,7 @@ hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + D",      hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + N",      hl.dsp.exec_cmd(terminal .. " -e nmtui"))
 hl.bind(mainMod .. " + X",      hl.dsp.exec_cmd("1password --quick-access"))
+hl.bind(mainMod .. " + M",      hl.dsp.exec_cmd("dunst-mute"))
 
 hl.bind(mainMod .. " + F8",     hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + F9",     hl.dsp.exec_cmd("suspendmenu"))

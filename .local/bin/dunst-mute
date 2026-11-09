@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# dunst-mute — pause dunst for N minutes (asked via tofi), then replay everything.
+#
+# While paused, dunst keeps new notifications in its waiting queue, and moves
+# notifications that are currently on screen back into that queue. Unpausing
+# shows them all again, so nothing is lost.
+#
+# Input:
+#   5      -> mute for 5 minutes
+#   1.5    -> mute for 90 seconds
+#   0      -> unmute now (cancels a running timer)
+#   empty / Esc -> do nothing
+# Running it again while muted replaces the old timer with the new duration.
+
+set -uo pipefail
+
+PIDFILE="${XDG_RUNTIME_DIR:-/tmp}/dunst-mute.pid"
+
+cancel_timer() {
+    if [[ -f $PIDFILE ]]; then
+        kill "$(cat "$PIDFILE")" 2>/dev/null
+        rm -f "$PIDFILE"
+    fi
+}
+
+if [[ $(dunstctl is-paused) == "true" ]]; then
+    prompt="muted · minutes (0 = unmute): "
+else
+    prompt="mute dunst for minutes: "
+fi
+
+# No list items: tofi just becomes a text prompt.
+input=$(tofi --require-match=false --prompt-text "$prompt" </dev/null) || exit 0
+input=${input//[[:space:]]/}
+[[ -z $input ]] && exit 0
+
+if [[ ! $input =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    [[ $(dunstctl is-paused) == "false" ]] && notify-send "dunst-mute" "Not a number: $input"
+    exit 1
+fi
+
+cancel_timer
+
+# 0 -> unmute right away
+if [[ $input =~ ^0+([.]0+)?$ ]]; then
+    dunstctl set-paused false
+    exit 0
+fi
+
+dunstctl set-paused true
+
+# Background timer, detached from the script.
+(
+    sleep "${input}m"
+    dunstctl set-paused false
+    # Only remove the pidfile if it still belongs to this timer.
+    [[ -f $PIDFILE && $(cat "$PIDFILE") == "$BASHPID" ]] && rm -f "$PIDFILE"
+) >/dev/null 2>&1 &
+
+echo $! > "$PIDFILE"
+disown
