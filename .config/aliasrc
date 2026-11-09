@@ -48,3 +48,6 @@ alias \
 
 # Better zoxide letter
 alias j='z'
+
+# terminal bell
+alias ding="printf '\a'"

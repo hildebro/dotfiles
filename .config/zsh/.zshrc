@@ -36,6 +36,8 @@ setopt always_to_end
 setopt path_dirs            
 # disable start/stop characters in shell editor
 unsetopt flow_control       
+# fix terminal bell happening on tab-complete
+unsetopt BEEP
 
 # group matches and describe.
 zstyle ':completion:*:matches' group 'yes'

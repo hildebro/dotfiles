@@ -7,6 +7,12 @@ family = "Inconsolata"
 [window]
 opacity = 0.9
 
+[bell]
+animation = "EaseOutExpo"
+duration = 200 # visual flash in ms; 0 disables it
+color = "#ffffff"
+command = { program = "notify-send", args = ["Alacritty", "Command finished"] }
+
 [[keyboard.bindings]]
 key = "Return"
 mods = "Shift"
