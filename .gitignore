@@ -35,6 +35,7 @@
 .config/systemd/user/sockets.target.wants/podman.socket
 
 # generated state and logs
+.config/autostart/com.onepassword.OnePassword.desktop
 .config/beets/state.pickle
 .config/btop/btop.log
 .config/configstore
