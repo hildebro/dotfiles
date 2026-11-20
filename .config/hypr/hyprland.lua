@@ -294,6 +294,7 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q",      hl.dsp.window.close())
 hl.bind(mainMod .. " + E",      hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + T",      hl.dsp.exec_cmd("localsend"))
 hl.bind(mainMod .. " + V",      hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + B",      hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + F",      hl.dsp.window.fullscreen())
